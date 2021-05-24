@@ -3,28 +3,44 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Favorites-->
+        <!--View Controller-->
         <scene sceneID="9kC-ak-Nfa">
             <objects>
                 <viewController id="6hw-rz-wpI" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AKh-cA-aYQ" customClass="UITableView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x3a-WG-hnZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="i2Y-CA-Psq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="x3a-WG-hnZ" firstAttribute="leading" secondItem="i2Y-CA-Psq" secondAttribute="leading" id="MJV-F9-zsL"/>
+                            <constraint firstItem="i2Y-CA-Psq" firstAttribute="bottom" secondItem="x3a-WG-hnZ" secondAttribute="bottom" id="QCm-rJ-8oS"/>
+                            <constraint firstItem="x3a-WG-hnZ" firstAttribute="top" secondItem="i2Y-CA-Psq" secondAttribute="top" id="d0c-WR-QWS"/>
+                            <constraint firstItem="i2Y-CA-Psq" firstAttribute="trailing" secondItem="x3a-WG-hnZ" secondAttribute="trailing" id="zLI-xy-dEf"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favorites" selectedImage="star" catalog="system" id="fbh-oy-vE5"/>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="fbh-oy-vE5">
+                        <color key="badgeColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <imageReference key="selectedImage" image="star" catalog="system" symbolScale="medium" renderingMode="original"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5I-Sk-bro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="932" y="431"/>
         </scene>
-        <!--Search-->
+        <!--View Controller-->
         <scene sceneID="a9o-2g-HTY">
             <objects>
                 <viewController id="JD7-M7-uiL" sceneMemberID="viewController">
@@ -145,7 +161,10 @@
                             <constraint firstItem="HXc-zI-CxG" firstAttribute="leading" secondItem="Adq-q0-wTf" secondAttribute="leading" id="xRs-K1-ZKB"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" selectedImage="magnifyingglass" catalog="system" id="J95-7R-Ouf"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="J95-7R-Ouf">
+                        <color key="badgeColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <imageReference key="selectedImage" image="magnifyingglass" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pB6-Qb-wOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
