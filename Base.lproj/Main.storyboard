@@ -43,7 +43,7 @@
         <!--View Controller-->
         <scene sceneID="a9o-2g-HTY">
             <objects>
-                <viewController id="JD7-M7-uiL" sceneMemberID="viewController">
+                <viewController id="JD7-M7-uiL" customClass="ViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GLc-w3-FGO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
