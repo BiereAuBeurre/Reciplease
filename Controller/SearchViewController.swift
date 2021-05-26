@@ -16,9 +16,12 @@ class SearchViewController: UIViewController {
     
     var ingredientsArray = [String]()
     var recipes: RecipesInfo?
+    var ingredientsListLogic = IngredientsListLogic()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(ingredientsListUpdated), name: Notification.Name("update"), object: nil)
+        
         // Do any additional setup after loading the view.
         ingredientsList.text = nil
     }
@@ -44,19 +47,10 @@ class SearchViewController: UIViewController {
         
         // We clear the search terms bar
         searchBar.text = nil
-        
-        // Maybe not necessary thanks to the append
-//        let index = ingredientsArray.count
-//        if ingredientsArray.count == 1 {
-//            ingredientsArray[0] = ingredient
-//        } else /*if ingredientsArray.count > 1 */{
-//            ingredientsArray[index-1] = ingredient
-//        }
-        
     }
     
     @IBAction func clearListButton(_ sender: Any) {
-        ingredientsList.text = ""
+        ingredientsListLogic.clearList()
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
@@ -70,5 +64,10 @@ class SearchViewController: UIViewController {
             }
         }
     }
+    
+    @objc func ingredientsListUpdated() {
+        ingredientsList.text = ingredientsListLogic.ingredientsList
+    }
+    
 }
 
