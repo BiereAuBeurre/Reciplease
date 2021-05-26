@@ -21,14 +21,6 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         ingredientsList.text = nil
-//        RecipeService().searchRecipesFor(mutateStringArray()) { result in
-//            switch result {
-//            case .success(let recipes):
-//                print(recipes)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
     
     func mutateStringArray() -> String {
@@ -37,13 +29,18 @@ class SearchViewController: UIViewController {
     
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
+        
+        // First we're checking an ingredient is type to don't add an empty field to our URLRequest
         guard searchBar.text != "" else { return showAlert("Please add an ingredient", "It seems you forgot to add an ingredient 😉") }
+        
+        // Giving the good value to ingredient
         guard let ingredient = searchBar.text else { return }
+        
         // Adding the ingredient currently type to the array of ingredients list
         ingredientsArray.append(ingredient)
         
         // Then we design the ingredient list look (only for user because we save it in our array)
-        ingredientsList.text += "\n" + ingredient
+        ingredientsList.text += "\n" + ingredient.capitalizingFirstLetter()
         
         // We clear the search terms bar
         searchBar.text = nil
@@ -63,9 +60,7 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
-//        RecipeService().searchRecipesFor(ingredientsList.text) { result in
         RecipeService().searchRecipesFor(mutateStringArray()) { result in
-
             switch result {
             case .success(let recipes):
                 print(recipes)
