@@ -8,13 +8,13 @@
 import Foundation
 
 class IngredientsListLogic {
+    static var recipes: [Recipe] = []
     
     var ingredientsList: String = "" {
         didSet {
             notifyUpdate()
         }
     }
-    /// REPRENDRE ICI
     var searchBar: String? = "" {
         didSet {
             notifyUpdate()
@@ -61,6 +61,24 @@ class IngredientsListLogic {
         
         // We clear the search terms bar
         clearSearchBar()
+    }
+    
+    private func ingredientsListformatted() -> String {
+        return ingredientsArray.joined(separator: ",")
+    }
+    
+    func browseRecipes() {
+        RecipeService.shared.fetchRecipes(for: ingredientsListformatted()) { result in
+            switch result {
+            case .success(let recipesResult):
+                print(recipesResult)
+                print(recipesResult.recipes.count)
+                IngredientsListLogic.recipes = recipesResult.recipes
+//                print(recipes.recipes.first!)
+            case .failure(let error):
+                print("Erreur :\(error)")
+            }
+        }
     }
     
 }

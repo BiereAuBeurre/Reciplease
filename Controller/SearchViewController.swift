@@ -8,11 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-//    let myVC = SearchViewController()
-
-    // create the NavigationController with my VC as root
-//    let navCon = UINavigationController(rootViewController: SearchViewController())
-    
+//    let shared = SearchViewController()
     @IBOutlet weak var ingredientsList: UITextView!
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
@@ -34,8 +30,6 @@ class SearchViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         ingredientsListLogic.clearList()
-//        self.navigationController?.isNavigationBarHidden = true
-
     }
     
     private func ingredientsListformatted() -> String {
@@ -48,7 +42,6 @@ class SearchViewController: UIViewController {
         guard searchBar.text != "" else { return notifyAlert() }
         // Unwrapping searchBar.text
         guard let ingredient = searchBar.text else { return }
-        
         ingredientsListLogic.addIngredient(ingredient)
     }
     
@@ -57,16 +50,7 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
-        RecipeService().fetchRecipes(for: ingredientsListformatted()) { result in
-            switch result {
-            case .success(let recipes):
-//                print(recipes)
-                print(recipes.recipes.count)
-//                print(recipes.recipes.first!)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        ingredientsListLogic.browseRecipes()
     }
     
     @objc func ingredientsListUpdated() {

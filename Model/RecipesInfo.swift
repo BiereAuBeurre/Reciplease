@@ -8,7 +8,7 @@
 import Foundation
 
 struct RecipesInfo: Decodable {
-    let recipes: [Recipe]
+     let recipes: [Recipe]
     
     enum CodingKeys: String, CodingKey {
         case recipes = "hits"
@@ -45,12 +45,6 @@ struct Recipe: Decodable {
         let decodedTotalTime = try recipe.decode(Double.self, forKey: .totalTime)
         totalTime = decodedTotalTime == 0.0 ? nil : decodedTotalTime
 //        recipe = recipe.joinded(separator:",")
-        
-//        if decodedTotalTime == 0.0 {
-//            totalTime = nil
-//        } else {
-//            totalTime = decodedTotalTime
-//        }
     }
 }
 
@@ -59,3 +53,46 @@ struct Ingredients: Decodable {
     let weight: Double
     let image: String?
 }
+
+//extension Recipe: Displayable1 {
+//    var recipeName: String {
+//        name
+//    }
+//    
+//    var urlOfRecipe: String {
+//        recipeUrl
+//    }
+//    
+//    var detailsIngredients: String {
+//        ingredients.joined(separator: "\n")
+//    }
+//    
+//    var recipeImage: String? {
+//        imageUrl
+//    }
+//    
+//    var duration:Double? {
+//        totalTime
+//    }
+//}
+//
+//extension Ingredients: Displayable2 {
+//    var imageUrl: String? {
+//        image
+//    }
+//    
+//    var description: String {
+//        text
+//    }
+//    var quantity: Double {
+//        weight
+//    }
+//
+//}
+
+
+//        if decodedTotalTime == 0.0 {
+//            totalTime = nil
+//        } else {
+//            totalTime = decodedTotalTime
+//        }
