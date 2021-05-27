@@ -7,14 +7,15 @@
 
 import UIKit
 
-class ListViewController: UITabBarController {
+class ListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        self.navigationController?.isNavigationBarHidden = false
+
     }
 }
 //
@@ -23,7 +24,7 @@ class ListViewController: UITabBarController {
 //}
 //
 //protocol UITableViewDataSource: class {
-//    func numberOfSections(in tableView: UITableView) -> Int
+//    func numberOfSections(in tableView: UITableView) -> Int { return 1 }
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 //    // (...)

@@ -8,7 +8,11 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+//    let myVC = SearchViewController()
 
+    // create the NavigationController with my VC as root
+//    let navCon = UINavigationController(rootViewController: SearchViewController())
+    
     @IBOutlet weak var ingredientsList: UITextView!
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
@@ -18,6 +22,11 @@ class SearchViewController: UIViewController {
     var recipes: RecipesInfo?
     var ingredientsListLogic = IngredientsListLogic()
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(ingredientsListUpdated), name: Notification.Name("update"), object: nil)
@@ -25,6 +34,8 @@ class SearchViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         ingredientsListLogic.clearList()
+//        self.navigationController?.isNavigationBarHidden = true
+
     }
     
     private func ingredientsListformatted() -> String {
@@ -51,7 +62,7 @@ class SearchViewController: UIViewController {
             case .success(let recipes):
 //                print(recipes)
                 print(recipes.recipes.count)
-                print(recipes.recipes.first!)
+//                print(recipes.recipes.first!)
             case .failure(let error):
                 print(error)
             }
