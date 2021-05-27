@@ -18,7 +18,6 @@ class SearchViewController: UIViewController {
     var recipes: RecipesInfo?
     var ingredientsListLogic = IngredientsListLogic()
     
-    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }

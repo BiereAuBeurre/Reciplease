@@ -15,10 +15,6 @@ struct RecipesInfo: Decodable {
     }
 }
 
-//struct Hits: Decodable {
-//    let recipe: Recipe
-//}
-
 struct Recipe: Decodable {
     let name: String
     let recipeUrl: String
@@ -53,43 +49,6 @@ struct Ingredients: Decodable {
     let weight: Double
     let image: String?
 }
-
-//extension Recipe: Displayable1 {
-//    var recipeName: String {
-//        name
-//    }
-//    
-//    var urlOfRecipe: String {
-//        recipeUrl
-//    }
-//    
-//    var detailsIngredients: String {
-//        ingredients.joined(separator: "\n")
-//    }
-//    
-//    var recipeImage: String? {
-//        imageUrl
-//    }
-//    
-//    var duration:Double? {
-//        totalTime
-//    }
-//}
-//
-//extension Ingredients: Displayable2 {
-//    var imageUrl: String? {
-//        image
-//    }
-//    
-//    var description: String {
-//        text
-//    }
-//    var quantity: Double {
-//        weight
-//    }
-//
-//}
-
 
 //        if decodedTotalTime == 0.0 {
 //            totalTime = nil
