@@ -36,10 +36,10 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
-        let recipe = IngredientsListLogic.recipes.first
+        let recipe = IngredientsListLogic.recipes[indexPath.row]
 //        let recipe = RecipeService.shared.recipes[indexPath.row]
-        cell.textLabel?.text = recipe?.name
-        cell.detailTextLabel?.text = recipe?.ingredients.first
+        cell.textLabel?.text = recipe.name
+        cell.detailTextLabel?.text = recipe.ingredients.first
         return cell
 
     }
