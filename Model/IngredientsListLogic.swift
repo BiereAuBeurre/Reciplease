@@ -14,6 +14,13 @@ class IngredientsListLogic {
             notifyUpdate()
         }
     }
+    /// REPRENDRE ICI
+    var searchBar: String = "" {
+        didSet {
+            notifyUpdate()
+        }
+    }
+    
     
     func notifyUpdate() {
        let notificationName = Notification.Name("update")
@@ -21,8 +28,22 @@ class IngredientsListLogic {
        NotificationCenter.default.post(notification)
    }
     
+    func notifyAlert() {
+        let notificationName = Notification.Name("alert")
+        let notification = Notification(name: notificationName)
+        NotificationCenter.default.post(notification)
+    }
+    
     func clearList() {
        ingredientsList = ""
+    }
+    
+    func clearSearchBar() {
+        searchBar = ""
+    }
+    
+    func formattingList(_ ingredient: String) {
+        ingredientsList += "\n" + ingredient.capitalizingFirstLetter()
     }
     
     

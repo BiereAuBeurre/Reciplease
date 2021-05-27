@@ -22,8 +22,10 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(ingredientsListUpdated), name: Notification.Name("update"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(notifyAlert), name: Notification.Name("alert"), object: nil)
+        
         // Do any additional setup after loading the view.
-        ingredientsList.text = nil
+        ingredientsListLogic.clearList()
     }
     
     func mutateStringArray() -> String {
@@ -34,7 +36,7 @@ class SearchViewController: UIViewController {
         searchBar.closeKeyboard()
         
         // First we're checking an ingredient is type to don't add an empty field to our URLRequest
-        guard searchBar.text != "" else { return showAlert("Please add an ingredient", "It seems you forgot to add an ingredient 😉") }
+        guard searchBar.text != "" else { return notifyAlert() }
         
         // Giving the good value to ingredient
         guard let ingredient = searchBar.text else { return }
@@ -43,10 +45,10 @@ class SearchViewController: UIViewController {
         ingredientsArray.append(ingredient)
         
         // Then we design the ingredient list look (only for user because we save it in our array)
-        ingredientsList.text += "\n" + ingredient.capitalizingFirstLetter()
+        ingredientsListLogic.formattingList(ingredient)
         
         // We clear the search terms bar
-        searchBar.text = nil
+        ingredientsListLogic.clearSearchBar()
     }
     
     @IBAction func clearListButton(_ sender: Any) {
@@ -67,6 +69,11 @@ class SearchViewController: UIViewController {
     
     @objc func ingredientsListUpdated() {
         ingredientsList.text = ingredientsListLogic.ingredientsList
+        searchBar.text = ingredientsListLogic.searchBar
+    }
+    
+    @objc func notifyAlert() {
+        showAlert("Please add an ingredient", "It seems you forgot to add an one 😉")
     }
     
 }
