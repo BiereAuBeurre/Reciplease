@@ -15,12 +15,17 @@ class IngredientsListLogic {
         }
     }
     /// REPRENDRE ICI
-    var searchBar: String = "" {
+    var searchBar: String? = "" {
         didSet {
             notifyUpdate()
         }
     }
     
+    var ingredientsArray: [String] = [] {
+        didSet {
+            notifyUpdate()
+        }
+    }
     
     func notifyUpdate() {
        let notificationName = Notification.Name("update")
@@ -36,6 +41,7 @@ class IngredientsListLogic {
     
     func clearList() {
        ingredientsList = ""
+        ingredientsArray.removeAll()
     }
     
     func clearSearchBar() {
@@ -45,6 +51,16 @@ class IngredientsListLogic {
     func formattingList(_ ingredient: String) {
         ingredientsList += "\n" + ingredient.capitalizingFirstLetter()
     }
-    
+
+    func addIngredient(_ ingredient: String) {
+        // Adding the ingredient currently type to the array of ingredients list
+        ingredientsArray.append(ingredient)
+        
+        // Then we design the ingredient list look (only for user because we save it in our array)
+        formattingList(ingredient)
+        
+        // We clear the search terms bar
+        clearSearchBar()
+    }
     
 }

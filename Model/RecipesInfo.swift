@@ -21,6 +21,7 @@ struct RecipesInfo: Decodable {
 
 struct Recipe: Decodable {
     let name: String
+    let recipeUrl: String
     let imageUrl: String?
     let ingredients: [String] // à convertir en string unique
     let totalTime: Double? // 0.0 pour nil chez certains à remplacer
@@ -30,6 +31,7 @@ struct Recipe: Decodable {
         case name = "label"
         case imageUrl = "image"
         case ingredients = "ingredientLines"
+        case recipeUrl = "url"
         case totalTime
     }
     
@@ -39,6 +41,7 @@ struct Recipe: Decodable {
         name = try recipe.decode(String.self, forKey: .name)
         imageUrl = try recipe.decode(String.self, forKey: .imageUrl)
         ingredients = try recipe.decode([String].self, forKey: .ingredients)
+        recipeUrl = try recipe.decode(String.self, forKey: .recipeUrl)
         let decodedTotalTime = try recipe.decode(Double.self, forKey: .totalTime)
         totalTime = decodedTotalTime == 0.0 ? nil : decodedTotalTime
 //        recipe = recipe.joinded(separator:",")

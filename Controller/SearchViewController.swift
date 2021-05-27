@@ -21,34 +21,24 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(ingredientsListUpdated), name: Notification.Name("update"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(notifyAlert), name: Notification.Name("alert"), object: nil)
         
         // Do any additional setup after loading the view.
         ingredientsListLogic.clearList()
     }
     
-    func mutateStringArray() -> String {
+    private func ingredientsListformatted() -> String {
         return ingredientsArray.joined(separator: ",")
     }
     
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
-        
         // First we're checking an ingredient is type to don't add an empty field to our URLRequest
         guard searchBar.text != "" else { return notifyAlert() }
-        
-        // Giving the good value to ingredient
+        // Unwrapping searchBar.text
         guard let ingredient = searchBar.text else { return }
         
-        // Adding the ingredient currently type to the array of ingredients list
-        ingredientsArray.append(ingredient)
-        
-        // Then we design the ingredient list look (only for user because we save it in our array)
-        ingredientsListLogic.formattingList(ingredient)
-        
-        // We clear the search terms bar
-        ingredientsListLogic.clearSearchBar()
+        ingredientsListLogic.addIngredient(ingredient)
     }
     
     @IBAction func clearListButton(_ sender: Any) {
@@ -56,11 +46,12 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
-        RecipeService().searchRecipesFor(mutateStringArray()) { result in
+        RecipeService().fetchRecipes(for: ingredientsListformatted()) { result in
             switch result {
             case .success(let recipes):
-                print(recipes)
+//                print(recipes)
                 print(recipes.recipes.count)
+                print(recipes.recipes.first!)
             case .failure(let error):
                 print(error)
             }
@@ -70,10 +61,11 @@ class SearchViewController: UIViewController {
     @objc func ingredientsListUpdated() {
         ingredientsList.text = ingredientsListLogic.ingredientsList
         searchBar.text = ingredientsListLogic.searchBar
+        ingredientsArray = ingredientsListLogic.ingredientsArray
     }
     
     @objc func notifyAlert() {
-        showAlert("Please add an ingredient", "It seems you forgot to add an one 😉")
+        showAlert("Please add an ingredient", "It seems you forgot to add one 😉")
     }
     
 }

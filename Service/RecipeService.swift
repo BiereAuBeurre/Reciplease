@@ -10,15 +10,13 @@ import Alamofire
 
 class RecipeService {
     
-    func searchRecipesFor(_ searchTerms: String, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
+    func fetchRecipes(for searchTerms: String, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
         let url = "https://api.edamam.com/search?q=\(searchTerms)&app_key=b5144453065bd0a94728a7da37aa3548&app_id=d698f1a4"
         let encodedUrl = url.replacingOccurrences(of: " ", with: "+")
         print(encodedUrl)
-
         Session.default.request(encodedUrl).validate().responseDecodable(of: RecipesInfo.self) { (response) in
             completion(response.result)
         }
-        
     }
 }
 
