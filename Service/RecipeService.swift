@@ -21,13 +21,13 @@ class RecipeService {
             completion(response.result)
         }
     }
-    private (set) var recipes: [Recipe] = []
-    func addRecipe(recipe: Recipe) {
+    
+    private (set) var recipes = [Recipe]()
+    func add(recipe: Recipe) {
         recipes.append(recipe)
     }
-    
-}
 
+}
 
 //        AF.request(url).validate().response { response in
 //            debugPrint(response)

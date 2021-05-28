@@ -6,8 +6,9 @@
 //
 
 import Foundation
-
+import UIKit
 class IngredientsListLogic {
+    
     static var recipes: [Recipe] = []
     
     var ingredientsList: String = "" {
@@ -74,6 +75,7 @@ class IngredientsListLogic {
                 print(recipesResult)
                 print(recipesResult.recipes.count)
                 IngredientsListLogic.recipes = recipesResult.recipes
+//                RecipeService.shared.add(recipe: recipesResult.recipes)
 //                print(recipes.recipes.first!)
             case .failure(let error):
                 print("Erreur :\(error)")

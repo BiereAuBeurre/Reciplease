@@ -14,35 +14,42 @@ class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
-        ingredientsListLogic.browseRecipes()
+        super.viewWillAppear(animated)
+//        ingredientsListLogic.browseRecipes()
+//        tableView.dataSource = self
+        print("JE LOAD LA DATA")
         tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         self.navigationController?.isNavigationBarHidden = false
 //        ingredientsListLogic.browseRecipes()
-        tableView.reloadData()
-
+        tableView.dataSource = self
+//        tableView.reloadData()
     }
 }
-extension ListViewController: UITableViewDataSource {
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
+        print("JE CREEE NOMBRE SECTION")
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return RecipeService.shared.recipes.count
+        print("JE CREEE NUMBER OF ROW IN SECTION")
         return IngredientsListLogic.recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("JE CREE LA CELL")
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
         let recipe = IngredientsListLogic.recipes[indexPath.row]
-//        let recipe = RecipeService.shared.recipes[indexPath.row]
-        cell.textLabel?.text = recipe.name + " : " +  recipe.ingredients[0]
+        cell.textLabel?.text = recipe.name /* + " : " +  recipe.ingredients[0] */
 //        cell.detailTextLabel?.text = recipe.ingredients[indexPath.row]
         return cell
 
     }
+    
+    
 }

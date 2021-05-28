@@ -8,14 +8,13 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-//    let shared = SearchViewController()
+    
     @IBOutlet weak var ingredientsList: UITextView!
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
     }
     
     var ingredientsArray = [String]()
-    var recipes: RecipesInfo?
     var ingredientsListLogic = IngredientsListLogic()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +34,7 @@ class SearchViewController: UIViewController {
         return ingredientsArray.joined(separator: ",")
     }
     
+    
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
         // First we're checking an ingredient is type to don't add an empty field to our URLRequest
@@ -49,6 +49,7 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
+        print("JE FAIS L'APPEL RESEAU")
         ingredientsListLogic.browseRecipes()
     }
     

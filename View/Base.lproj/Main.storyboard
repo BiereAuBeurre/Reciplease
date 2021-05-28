@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ywa-1s-5EK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favCell" id="ywa-1s-5EK">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ywa-1s-5EK" id="TS4-mm-8N1">
@@ -144,8 +144,8 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="searchRecipesButton:" destination="JD7-M7-uiL" eventType="touchUpInside" id="e7g-KI-FC6"/>
-                                    <segue destination="srr-VR-tVs" kind="show" id="dHu-8e-3Es"/>
+                                    <action selector="searchRecipesButton:" destination="JD7-M7-uiL" eventType="touchUpInside" id="nHo-IH-12f"/>
+                                    <segue destination="srr-VR-tVs" kind="show" id="xo4-XZ-KWS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -190,7 +190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pB6-Qb-wOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1872" y="-267"/>
+            <point key="canvasLocation" x="1659" y="-267"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="BAW-e4-yb1">
@@ -238,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mco-tJ-xaw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2677" y="-267"/>
+            <point key="canvasLocation" x="2429" y="-275"/>
         </scene>
         <!--Item-->
         <scene sceneID="93K-zl-lpI">
