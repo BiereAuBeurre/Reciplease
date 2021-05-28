@@ -40,7 +40,7 @@ struct Recipe: Decodable {
         recipeUrl = try recipe.decode(String.self, forKey: .recipeUrl)
         let decodedTotalTime = try recipe.decode(Double.self, forKey: .totalTime)
         totalTime = decodedTotalTime == 0.0 ? nil : decodedTotalTime
-//        recipe = recipe.joinded(separator:",")
+//        ingredients = ingredients.joinded(separator:",")
     }
 }
 

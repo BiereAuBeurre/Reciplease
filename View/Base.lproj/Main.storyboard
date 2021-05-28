@@ -145,9 +145,12 @@
                                 </state>
                                 <connections>
                                     <action selector="searchRecipesButton:" destination="JD7-M7-uiL" eventType="touchUpInside" id="nHo-IH-12f"/>
-                                    <segue destination="srr-VR-tVs" kind="show" id="xo4-XZ-KWS"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Zad-e4-1lV">
+                                <rect key="frame" x="188.5" y="724.5" width="37" height="37"/>
+                                <color key="color" systemColor="linkColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aPc-6N-XlW"/>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -161,10 +164,12 @@
                             <constraint firstItem="HXc-zI-CxG" firstAttribute="leading" secondItem="aPc-6N-XlW" secondAttribute="leading" constant="16" id="GRH-6f-IKN"/>
                             <constraint firstItem="L5Y-e3-7Tu" firstAttribute="top" secondItem="vtt-jd-Dtl" secondAttribute="bottom" constant="29" id="IYK-N7-QPM"/>
                             <constraint firstItem="Qg8-mV-jue" firstAttribute="top" secondItem="fn9-pf-J5C" secondAttribute="bottom" constant="40" id="JE5-Bz-YiY"/>
+                            <constraint firstItem="Zad-e4-1lV" firstAttribute="centerY" secondItem="ObJ-4I-Loe" secondAttribute="centerY" id="TIx-xK-24B"/>
                             <constraint firstItem="vtt-jd-Dtl" firstAttribute="top" secondItem="jHS-nT-2W0" secondAttribute="bottom" constant="40" id="USV-J9-EkS"/>
                             <constraint firstItem="jHS-nT-2W0" firstAttribute="trailing" secondItem="vtt-jd-Dtl" secondAttribute="trailing" id="Vwl-UP-dMm"/>
                             <constraint firstItem="fn9-pf-J5C" firstAttribute="centerX" secondItem="GLc-w3-FGO" secondAttribute="centerX" id="Xgi-rD-SkH"/>
                             <constraint firstItem="fn9-pf-J5C" firstAttribute="top" secondItem="aPc-6N-XlW" secondAttribute="top" constant="8" id="Zhn-Bc-4xG"/>
+                            <constraint firstItem="Zad-e4-1lV" firstAttribute="centerX" secondItem="ObJ-4I-Loe" secondAttribute="centerX" id="bJS-NQ-FW5"/>
                             <constraint firstItem="HXc-zI-CxG" firstAttribute="top" secondItem="Qg8-mV-jue" secondAttribute="bottom" constant="24" id="bZv-jc-W7E"/>
                             <constraint firstItem="aPc-6N-XlW" firstAttribute="trailing" secondItem="L5Y-e3-7Tu" secondAttribute="trailing" constant="32" id="k2z-Tx-4Gg"/>
                             <constraint firstItem="aPc-6N-XlW" firstAttribute="bottom" secondItem="ObJ-4I-Loe" secondAttribute="bottom" constant="40" id="kdL-O3-Ooz"/>
@@ -184,13 +189,16 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="wtl-pv-rS3"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Zad-e4-1lV" id="EeT-E3-JOb"/>
                         <outlet property="ingredientsList" destination="L5Y-e3-7Tu" id="RSV-eg-Dfv"/>
                         <outlet property="searchBar" destination="HXc-zI-CxG" id="zTG-Wt-rfb"/>
+                        <outlet property="searchRecipesButton" destination="ObJ-4I-Loe" id="jYq-QR-mXI"/>
+                        <segue destination="srr-VR-tVs" kind="show" identifier="SearchToResult" id="PFJ-Iz-Obt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pB6-Qb-wOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1659" y="-267"/>
+            <point key="canvasLocation" x="1657" y="-275"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="BAW-e4-yb1">
@@ -281,6 +289,9 @@
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -22,13 +22,12 @@ class RecipeService {
         }
     }
     
-    private (set) var recipes = [Recipe]()
-    func add(recipe: Recipe) {
-        recipes.append(recipe)
-    }
+//    private (set) var recipes = [Recipe]()
+//    func createRecipeArray(recipes: [Recipe]) {
+//        var data = recipes
+//    }
 
 }
-
 //        AF.request(url).validate().response { response in
 //            debugPrint(response)
 //            guard let data = response.data else { return }

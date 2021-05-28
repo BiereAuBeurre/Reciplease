@@ -9,11 +9,13 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    @IBOutlet weak var searchRecipesButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var ingredientsList: UITextView!
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
     }
-    
+    var dataRecipe: RecipesInfo?
     var ingredientsArray = [String]()
     var ingredientsListLogic = IngredientsListLogic()
     
@@ -28,6 +30,8 @@ class SearchViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         ingredientsListLogic.clearList()
+        self.activityIndicator.isHidden = true
+
     }
     
     private func ingredientsListformatted() -> String {
@@ -50,7 +54,25 @@ class SearchViewController: UIViewController {
     
     @IBAction func searchRecipesButton(_ sender: Any) {
         print("JE FAIS L'APPEL RESEAU")
-        ingredientsListLogic.browseRecipes()
+        searchRecipesButton.isHidden = true
+        activityIndicator.isHidden = false
+//        ingredientsListLogic.browseRecipes()
+        RecipeService.shared.fetchRecipes(for: ingredientsListformatted()) { result in
+            switch result {
+            case .success(let recipesResult):
+                print(recipesResult)
+                print(recipesResult.recipes.count)
+                IngredientsListLogic.recipes = recipesResult.recipes
+                self.dataRecipe = recipesResult
+//                RecipeService.shared.add(recipe: recipesResult.recipes)
+//                print(recipes.recipes.first!)
+                self.activityIndicator.isHidden = true
+                self.searchRecipesButton.isHidden = false
+                self.performSegue(withIdentifier: "SearchToResult", sender: nil)
+            case .failure(let error):
+                print("Erreur :\(error)")
+            }
+        }
     }
     
     @objc func ingredientsListUpdated() {
@@ -61,6 +83,14 @@ class SearchViewController: UIViewController {
     
     @objc func notifyAlert() {
         showAlert("Please add an ingredient", "It seems you forgot to add one 😉")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dataController = segue.destination as? ListViewController {
+            dataController.dataRecipe = self.dataRecipe
+//            dataController.ingredients = ingredients
+//            dataController.recipes = recipes
+        }
     }
     
 }

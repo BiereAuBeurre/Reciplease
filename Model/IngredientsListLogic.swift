@@ -57,7 +57,7 @@ class IngredientsListLogic {
         // Adding the ingredient currently type to the array of ingredients list
         ingredientsArray.append(ingredient)
         
-        // Then we design the ingredient list look (only for user because we save it in our array)
+        // Then we design the ingredient list look (only for user because we save it in a different array)
         formattingList(ingredient)
         
         // We clear the search terms bar
@@ -68,19 +68,20 @@ class IngredientsListLogic {
         return ingredientsArray.joined(separator: ",")
     }
     
-    func browseRecipes() {
-        RecipeService.shared.fetchRecipes(for: ingredientsListformatted()) { result in
-            switch result {
-            case .success(let recipesResult):
-                print(recipesResult)
-                print(recipesResult.recipes.count)
-                IngredientsListLogic.recipes = recipesResult.recipes
-//                RecipeService.shared.add(recipe: recipesResult.recipes)
-//                print(recipes.recipes.first!)
-            case .failure(let error):
-                print("Erreur :\(error)")
-            }
-        }
-    }
+//    func browseRecipes() {
+//        RecipeService.shared.fetchRecipes(for: ingredientsListformatted()) { result in
+//            switch result {
+//            case .success(let recipesResult):
+//                print(recipesResult)
+//                print(recipesResult.recipes.count)
+//                IngredientsListLogic.recipes = recipesResult.recipes
+//
+////                RecipeService.shared.add(recipe: recipesResult.recipes)
+////                print(recipes.recipes.first!)
+//            case .failure(let error):
+//                print("Erreur :\(error)")
+//            }
+//        }
+//    }
     
 }
