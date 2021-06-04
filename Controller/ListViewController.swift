@@ -57,11 +57,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let recipe = recipes[indexPath.row]
-
+        let totalTime = Int(recipe.totalTime ?? 15)
         if let cellCustom = tableView.dequeueReusableCell(withIdentifier: "dataCell") as? RecipeCell {
             cellCustom.recipeTitle.text = recipe.name
             cellCustom.recipeIngredient.text = recipe.ingredients.joined(separator: ", ")
             cellCustom.background.loadImage(recipe.imageUrl ?? "https://oceanrecipes.com/wp-content/uploads/2020/04/Cover-scaled.jpg")
+            cellCustom.durationLabel.text = "\(totalTime)"
             return cellCustom
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
