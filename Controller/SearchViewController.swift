@@ -27,7 +27,6 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
         clearList()
         self.activityIndicator.isHidden = true
-
     }
     
     private func ingredientsListformatted() -> String {
@@ -46,7 +45,6 @@ class SearchViewController: UIViewController {
                 print(recipesInfo.recipes.count)
                 self.recipes = recipesInfo.recipes
                 self.pushRecipeList()
-
             case .failure(let error):
                 print("Erreur :\(error)")
             }
@@ -64,6 +62,7 @@ class SearchViewController: UIViewController {
         listViewController.recipes = recipes
         listViewController.dataMode = .api
         listViewController.modalPresentationStyle = .currentContext
+        listViewController.navigationController?.isNavigationBarHidden = false
         self.present(listViewController, animated: true)
     }
     

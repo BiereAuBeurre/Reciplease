@@ -31,22 +31,22 @@ class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        tableView.dataSource = self
-        print("JE LOAD LA DATA")
         tableView.reloadData()
+        self.navigationController?.isNavigationBarHidden = false
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = dataMode.title
         // Do any additional setup after loading the view.
-        self.navigationController?.isNavigationBarHidden = false
         tableView.dataSource = self
+//        title = dataMode.title
+//        self.navigationController?.isNavigationBarHidden = false
+
     }
 }
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        print("JE CREEE NOMBRE SECTION")
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,15 +56,25 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
-        print("JE CREE LA CELL")
         let recipe = recipes[indexPath.row]
 
-        cell.textLabel?.text = recipe.name /* + " : " +  recipe.ingredients[0] */
-//        cell.detailTextLabel?.text = recipe.ingredients[indexPath.row]
-        return cell
+        if let cellCustom = tableView.dequeueReusableCell(withIdentifier: "dataCell") as? RecipeCell {
+            cellCustom.recipeTitle.text = recipe.name
+            cellCustom.recipeIngredient.text = recipe.ingredients.joined(separator: ", ")
+            cellCustom.background.loadImage(recipe.imageUrl ?? "https://oceanrecipes.com/wp-content/uploads/2020/04/Cover-scaled.jpg")
+            return cellCustom
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
+            return cell
+        }
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
+//        print("JE CREE LA CELL")
+//        let recipe = recipes[indexPath.row]
 
+//        cell.textLabel?.text = recipe.name /* + " : " +  recipe.ingredients[0] */
+//        cell.detailTextLabel?.text = recipe.ingredients[indexPath.row]
+//        cell.imageView?.loadImage(recipe.imageUrl!)
+//        return cell
     }
-    
     
 }
