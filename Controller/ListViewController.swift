@@ -15,34 +15,42 @@ enum DataMode {
     var title: String {
         switch self {
         case .api :
-            return "Result"
+            return "Search results"
         case .coreData :
             return "Favorites"
         }
     }
 }
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, UINavigationBarDelegate {
     
     var recipes: [Recipe] = []
     var dataMode: DataMode = .api
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
         self.navigationController?.isNavigationBarHidden = false
-
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBar.delegate = self
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "\(recipes.count) \(dataMode.title)"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action:#selector(self.dismissListController))
+        navigationBar.items = [navigationItem]
+        view.addSubview(navigationBar)
         // Do any additional setup after loading the view.
         tableView.dataSource = self
-//        title = dataMode.title
 //        self.navigationController?.isNavigationBarHidden = false
 
+    }
+    @objc func dismissListController() {
+        dismiss(animated: true, completion: nil)
     }
 }
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -60,9 +68,9 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         let totalTime = Int(recipe.totalTime ?? 15)
         if let cellCustom = tableView.dequeueReusableCell(withIdentifier: "dataCell") as? RecipeCell {
             cellCustom.recipeTitle.text = recipe.name
-            cellCustom.recipeIngredient.text = recipe.ingredients.joined(separator: ", ")
+            cellCustom.recipeIngredient.text = "\(recipe.ingredients.joined(separator: ", "))."
             cellCustom.background.loadImage(recipe.imageUrl ?? "https://oceanrecipes.com/wp-content/uploads/2020/04/Cover-scaled.jpg")
-            cellCustom.durationLabel.text = "\(totalTime)"
+            cellCustom.durationLabel.text = "\(totalTime) min"
             return cellCustom
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)

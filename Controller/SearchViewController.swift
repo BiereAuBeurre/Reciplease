@@ -9,6 +9,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var addIngredientButton: UIButton!
     @IBOutlet weak var searchRecipesButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var ingredientsList: UITextView!
@@ -27,6 +29,9 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
         clearList()
         self.activityIndicator.isHidden = true
+        searchRecipesButton.addCornerRadius()
+        clearButton.addCornerRadius()
+        addIngredientButton.addCornerRadius()
     }
     
     private func ingredientsListformatted() -> String {
