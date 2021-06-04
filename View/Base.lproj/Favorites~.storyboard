@@ -9,6 +9,47 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="9kC-ak-Nfa">
+            <objects>
+                <viewController id="6hw-rz-wpI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AKh-cA-aYQ" customClass="UITableView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x3a-WG-hnZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favCell" id="ywa-1s-5EK">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ywa-1s-5EK" id="TS4-mm-8N1">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="i2Y-CA-Psq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="x3a-WG-hnZ" firstAttribute="leading" secondItem="i2Y-CA-Psq" secondAttribute="leading" id="MJV-F9-zsL"/>
+                            <constraint firstItem="i2Y-CA-Psq" firstAttribute="bottom" secondItem="x3a-WG-hnZ" secondAttribute="bottom" id="QCm-rJ-8oS"/>
+                            <constraint firstItem="x3a-WG-hnZ" firstAttribute="top" secondItem="i2Y-CA-Psq" secondAttribute="top" id="d0c-WR-QWS"/>
+                            <constraint firstItem="i2Y-CA-Psq" firstAttribute="trailing" secondItem="x3a-WG-hnZ" secondAttribute="trailing" id="zLI-xy-dEf"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="fbh-oy-vE5">
+                        <color key="badgeColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <imageReference key="selectedImage" image="star" catalog="system" symbolScale="medium" renderingMode="original"/>
+                    </tabBarItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5I-Sk-bro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="932" y="431"/>
+        </scene>
         <!--Search View Controller-->
         <scene sceneID="a9o-2g-HTY">
             <objects>
@@ -152,6 +193,7 @@
                         <outlet property="ingredientsList" destination="L5Y-e3-7Tu" id="RSV-eg-Dfv"/>
                         <outlet property="searchBar" destination="HXc-zI-CxG" id="zTG-Wt-rfb"/>
                         <outlet property="searchRecipesButton" destination="ObJ-4I-Loe" id="jYq-QR-mXI"/>
+                        <segue destination="srr-VR-tVs" kind="show" identifier="SearchToResult" id="PFJ-Iz-Obt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pB6-Qb-wOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -161,7 +203,7 @@
         <!--List View Controller-->
         <scene sceneID="BAW-e4-yb1">
             <objects>
-                <viewController storyboardIdentifier="ListViewController" id="srr-VR-tVs" customClass="ListViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="srr-VR-tVs" customClass="ListViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q7x-Oh-fk4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -234,26 +276,17 @@
                     </tabBar>
                     <connections>
                         <segue destination="JjQ-GL-eyi" kind="relationship" relationship="viewControllers" id="JPW-pZ-akd"/>
-                        <segue destination="mqY-oT-AP0" kind="relationship" relationship="viewControllers" id="xYi-p9-nXj"/>
+                        <segue destination="6hw-rz-wpI" kind="relationship" relationship="viewControllers" id="xYi-p9-nXj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c2E-O3-aHJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-157" y="75"/>
         </scene>
-        <!--Favorites-->
-        <scene sceneID="UKX-lk-ryV">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Favorites" id="mqY-oT-AP0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="u5f-ag-qKB"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xrB-bA-o7t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="932" y="431"/>
-        </scene>
     </scenes>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

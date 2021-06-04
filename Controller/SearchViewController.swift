@@ -15,21 +15,17 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
     }
-    var dataRecipe: RecipesInfo?
     var ingredientsArray = [String]()
-    var ingredientsListLogic = IngredientsListLogic()
-    
+    var recipes: [Recipe] = []
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(ingredientsListUpdated), name: Notification.Name("update"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(notifyAlert), name: Notification.Name("alert"), object: nil)
-        
         // Do any additional setup after loading the view.
-        ingredientsListLogic.clearList()
+        clearList()
         self.activityIndicator.isHidden = true
 
     }
@@ -38,60 +34,75 @@ class SearchViewController: UIViewController {
         return ingredientsArray.joined(separator: ",")
     }
     
-    
-    @IBAction func addIngredientsButton(_ sender: Any) {
-        searchBar.closeKeyboard()
-        // First we're checking an ingredient is type to don't add an empty field to our URLRequest
-        guard searchBar.text != "" else { return notifyAlert() }
-        // Unwrapping searchBar.text
-        guard let ingredient = searchBar.text else { return }
-        ingredientsListLogic.addIngredient(ingredient)
-    }
-    
-    @IBAction func clearListButton(_ sender: Any) {
-        ingredientsListLogic.clearList()
-    }
-    
-    @IBAction func searchRecipesButton(_ sender: Any) {
-        print("JE FAIS L'APPEL RESEAU")
+    private func fetchRecipes() {
         searchRecipesButton.isHidden = true
         activityIndicator.isHidden = false
-//        ingredientsListLogic.browseRecipes()
         RecipeService.shared.fetchRecipes(for: ingredientsListformatted()) { result in
+            self.activityIndicator.isHidden = true
+            self.searchRecipesButton.isHidden = false
             switch result {
-            case .success(let recipesResult):
-                print(recipesResult)
-                print(recipesResult.recipes.count)
-                IngredientsListLogic.recipes = recipesResult.recipes
-                self.dataRecipe = recipesResult
-//                RecipeService.shared.add(recipe: recipesResult.recipes)
-//                print(recipes.recipes.first!)
-                self.activityIndicator.isHidden = true
-                self.searchRecipesButton.isHidden = false
-                self.performSegue(withIdentifier: "SearchToResult", sender: nil)
+            case .success(let recipesInfo):
+                print(recipesInfo)
+                print(recipesInfo.recipes.count)
+                self.recipes = recipesInfo.recipes
+                self.pushRecipeList()
+
             case .failure(let error):
                 print("Erreur :\(error)")
             }
         }
     }
     
-    @objc func ingredientsListUpdated() {
-        ingredientsList.text = ingredientsListLogic.ingredientsList
-        searchBar.text = ingredientsListLogic.searchBar
-        ingredientsArray = ingredientsListLogic.ingredientsArray
+    private func clearList() {
+        ingredientsList.text = ""
+        ingredientsArray.removeAll()
     }
     
-    @objc func notifyAlert() {
-        showAlert("Please add an ingredient", "It seems you forgot to add one 😉")
+    func pushRecipeList() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let listViewController = storyboard.instantiateViewController(identifier: "ListViewController") as? ListViewController else { return }
+        listViewController.recipes = recipes
+        listViewController.dataMode = .api
+        listViewController.modalPresentationStyle = .currentContext
+        self.present(listViewController, animated: true)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dataController = segue.destination as? ListViewController {
-            dataController.dataRecipe = self.dataRecipe
+    @IBAction func addIngredientsButton(_ sender: Any) {
+        searchBar.closeKeyboard()
+        // First we're checking an ingredient is type to don't add an empty field to our URLRequest
+        guard searchBar.text != "" else { return showAlert("Please add an ingredient", "It seems you forgot to add one 😉") }
+        // Unwrapping searchBar.text
+        guard let ingredient = searchBar.text else { return }
+        ingredientsArray.append(ingredient)
+        ingredientsList.text += "\n" + ingredient.capitalizingFirstLetter()
+    }
+    
+    @IBAction func clearListButton(_ sender: Any) {
+        clearList()
+    }
+    
+    @IBAction func searchRecipesButton(_ sender: Any) {
+        print("JE FAIS L'APPEL RESEAU")
+        fetchRecipes()
+    }
+    
+//    @objc func ingredientsListUpdated() {
+//        ingredientsList.text = ingredientsListLogic.ingredientsList
+//        searchBar.text = ingredientsListLogic.searchBar
+//        ingredientsArray = ingredientsListLogic.ingredientsArray
+//    }
+//
+//    @objc func notifyAlert() {
+//        showAlert("Please add an ingredient", "It seems you forgot to add one 😉")
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let dataController = segue.destination as? ListViewController {
+//            dataController.dataRecipe = self.dataRecipe
 //            dataController.ingredients = ingredients
 //            dataController.recipes = recipes
-        }
-    }
+//        }
+//    }
     
 }
 

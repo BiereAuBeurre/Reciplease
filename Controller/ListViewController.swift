@@ -8,10 +8,25 @@
 import UIKit
 import Alamofire
 
+
+enum DataMode {
+    case api
+    case coreData
+    var title: String {
+        switch self {
+        case .api :
+            return "Result"
+        case .coreData :
+            return "Favorites"
+        }
+    }
+}
+
 class ListViewController: UIViewController {
-//    var ingredientsListLogic = IngredientsListLogic()
-    var dataRecipe: RecipesInfo?
-    var recipes = IngredientsListLogic.recipes
+    
+    var recipes: [Recipe] = []
+    var dataMode: DataMode = .api
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,12 +38,10 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = dataMode.title
         // Do any additional setup after loading the view.
         self.navigationController?.isNavigationBarHidden = false
-//        ingredientsListLogic.browseRecipes()
         tableView.dataSource = self
-//        tableView.reloadData()
     }
 }
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -38,14 +51,14 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("JE CREEE NUMBER OF ROW IN SECTION")
-        return IngredientsListLogic.recipes.count
+        return recipes.count
 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dataCell", for: indexPath)
         print("JE CREE LA CELL")
-        let recipe = IngredientsListLogic.recipes[indexPath.row]
+        let recipe = recipes[indexPath.row]
 
         cell.textLabel?.text = recipe.name /* + " : " +  recipe.ingredients[0] */
 //        cell.detailTextLabel?.text = recipe.ingredients[indexPath.row]
