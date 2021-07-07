@@ -29,7 +29,7 @@ enum State<Data> {
 }
 
 class ListViewController: UIViewController, UINavigationBarDelegate {
-    
+    var extraInfoView = ExtraInfoView()
     let activityIndicator = UIActivityIndicatorView(style: .large)
 
 
@@ -183,19 +183,11 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-//        viewState = .loading
-        
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell") as? RecipeCell else {
             assertionFailure("Dequeue TableView is of wrong type")
             return UITableViewCell()
         }
-
         cell.recipe = recipes[indexPath.row]
-//        activityIndicator.isHidden = true
-//        tableView.isHidden = false
         return cell
     }
     

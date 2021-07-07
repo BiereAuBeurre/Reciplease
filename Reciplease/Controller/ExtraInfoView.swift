@@ -16,49 +16,33 @@ class ExtraInfoView: UIView {
     }
     
     var parentStackView = UIStackView()
-    
+    var prepTimeStackView = UIStackView()
+    var numbOfGuestStackView = UIStackView()
     var preparationTime = UILabel()
     var numberOfGuests = UILabel()
-    
+    var preparationTimeIcon = UIImageView()
+    var numberOfGuestsIcon = UIImageView()
     
     func refreshData()  {
-        // faire if let si on connait pas ces valeurs, ne pas afficher ou unknown
-        // date formatter à checker, pas min
-        
+        // TODO: date formatter à checker, pas min
+    
         
         if let numberOfGuests = recipe?.yield {
-            self.numberOfGuests.attributedText = textWithAttachedIcon("person.2.fill", " \(Int(numberOfGuests))")
+            self.numberOfGuests.text = " \(Int(numberOfGuests))"
+            self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
         } else {
-//            self.numberOfGuests.attributedText = textWithAttachedIcon("person.2.fill", " -")
+            self.numberOfGuestsIcon.isHidden = true
             self.numberOfGuests.isHidden = true
-
         }
         
         if let preparationTime = recipe?.totalTime {
-            self.preparationTime.attributedText = textWithAttachedIcon("alarm.fill", " \(Int(preparationTime))")
+            self.preparationTime.text = " \(Int(preparationTime))"
+            self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
         } else {
-//            self.preparationTime.attributedText = textWithAttachedIcon("alarm.fill"," -")
             self.preparationTime.isHidden = true
-
+            self.preparationTimeIcon.isHidden = true
         }
     }
-    // plutot garder uiimage avec uilabel / fixer taille à la uiimage 15x15
-    func textWithAttachedIcon(_ imageName: String, _ text: String) -> NSMutableAttributedString {
-        //create attachmment
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)
-        
-        imageAttachment.bounds = CGRect(x: 0, y: -3, width: imageAttachment.image!.size.width, height: (imageAttachment.image?.size.height)!)
-        let attachmentString = NSAttributedString(attachment: imageAttachment)
-        let completeText = NSMutableAttributedString(string: "")
-        completeText.append(attachmentString)
-        let textAfterIcon = NSAttributedString(string: text)
-        completeText.append(textAfterIcon)
-        imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
-
-        return completeText
-    }
-    
     
     func configureView() {
         
@@ -66,21 +50,41 @@ class ExtraInfoView: UIView {
         preparationTime.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.textAlignment = .natural
-        //        backgroundColor = .purple
+        //        backgroundColor = .myPink
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.layer.masksToBounds = true
         //        parentStackView.layer.cornerRadius = 5
         parentStackView.spacing = 0
         parentStackView.distribution = .fillEqually
         parentStackView.axis = .vertical
-        parentStackView.addArrangedSubview(numberOfGuests)
-        parentStackView.addArrangedSubview(preparationTime)
+        numbOfGuestStackView.translatesAutoresizingMaskIntoConstraints = false
+        prepTimeStackView.translatesAutoresizingMaskIntoConstraints = false
+        numbOfGuestStackView.axis = .horizontal
+        numbOfGuestStackView.distribution = .fillProportionally
+        prepTimeStackView.distribution = .fillProportionally
+        preparationTimeIcon.tintColor = .label
+        numberOfGuestsIcon.tintColor = .label
+        prepTimeStackView.axis = .horizontal
+        numbOfGuestStackView.addArrangedSubview(numberOfGuestsIcon)
+        numbOfGuestStackView.addArrangedSubview(numberOfGuests)
+        
+        prepTimeStackView.addArrangedSubview(preparationTimeIcon)
+        prepTimeStackView.addArrangedSubview(preparationTime)
+        
+        parentStackView.addArrangedSubview(prepTimeStackView)
+        parentStackView.addArrangedSubview(numbOfGuestStackView)
+        
         addSubview(parentStackView)
         
         // MARK: - Constraints
         NSLayoutConstraint.activate([
-            parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            preparationTimeIcon.heightAnchor.constraint(equalToConstant: 20),
+            preparationTimeIcon.widthAnchor.constraint(equalToConstant: 20),
+
+            numberOfGuestsIcon.heightAnchor.constraint(equalToConstant: 20),
+            numberOfGuestsIcon.widthAnchor.constraint(equalToConstant: 20),
             
+            parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
             parentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
             parentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)

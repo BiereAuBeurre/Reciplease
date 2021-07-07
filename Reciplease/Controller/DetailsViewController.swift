@@ -12,7 +12,8 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     var recipes: [Recipe] = []
     var recipe: Recipe?
     private var isRecipeFavorite = false
-    
+    var extraInfoView = ExtraInfoView()
+
     @IBOutlet weak var ingredientsTitle: UILabel!
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
@@ -29,8 +30,9 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchFavoriteState()
-//        toggleFavorite()
         setUpFavoriteButton()
+        extraInfoView.recipe = recipe
+        extraInfoView.configureView()
     }
     
     
@@ -53,6 +55,12 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         } else {
             backgroundPicture.loadImage((recipe?.imageUrl)!)
         }
+        extraInfoView.frame = CGRect(x: 360, y: 96, width: 200, height: 50)
+        extraInfoView.numberOfGuests.textColor = .label
+        extraInfoView.numberOfGuestsIcon.tintColor = .label
+        extraInfoView.recipe = recipe
+        extraInfoView.configureView()
+        backgroundPicture.addSubview(extraInfoView)
     }
     
     private func addToFavorite() {

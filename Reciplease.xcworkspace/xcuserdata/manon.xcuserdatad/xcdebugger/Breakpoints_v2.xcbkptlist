@@ -23,16 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "124A4BA9-8BA1-4EEA-8EBD-6C5838E3D75D"
+            uuid = "CCD13C39-79ED-447F-88F7-C16629A9B60E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Reciplease/Controller/DetailsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "fetchFavoriteState()"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "setUpView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
