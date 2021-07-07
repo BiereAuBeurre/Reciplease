@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // *********** A CHECKER ******************** /!\ /!\
-        let UILabelAppeareance = UILabel.appearance()
-        UILabelAppeareance.adjustsFontForContentSizeCategory = true
+//        let UILabelAppeareance = UILabel.appearance()
+//        UILabelAppeareance.adjustsFontForContentSizeCategory = true
         
         // CODE SAFE A PARTIR D'ici
         return true

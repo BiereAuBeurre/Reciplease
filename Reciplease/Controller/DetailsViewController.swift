@@ -82,7 +82,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     private func fetchFavoriteState() {
         guard let recipe = recipe else { return }
         let recipes = try? StorageService.sharedStorageService.loadRecipes()
-        guard let _ = recipes?.first(where: { $0 == recipe }) else { return }
+        guard let _ = recipes?.first(where: { $0 == recipe }) else { isRecipeFavorite = false; return }
         isRecipeFavorite = true
     }
     

@@ -42,7 +42,7 @@ class ExtraInfoView: UIView {
 
         }
     }
-    
+    // plutot garder uiimage avec uilabel / fixer taille à la uiimage 15x15
     func textWithAttachedIcon(_ imageName: String, _ text: String) -> NSMutableAttributedString {
         //create attachmment
         let imageAttachment = NSTextAttachment()

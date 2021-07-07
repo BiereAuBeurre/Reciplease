@@ -7,7 +7,9 @@
 
 import CoreData
 class StorageService {
-    
+    //storage : test load delete et save, utiliser une autre bdd = coreDataBase en mémoire, pas persistée
+    //créer persistent container en memoire et le passer poru qu'il soit utiliser, avoir fake recette dans fake data et le sauver, loader et delete
+
     static let sharedStorageService = StorageService()
 
     let viewContext: NSManagedObjectContext
