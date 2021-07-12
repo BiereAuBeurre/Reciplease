@@ -18,12 +18,11 @@ class RecipleaseTests: XCTestCase {
         configuration.protocolClasses = [UrlProtocolMock.self]
         session = Session(configuration: configuration)
         networkService = RecipeService(session: session)
-
     }
 
     func testGetRecipesShouldPostFailedCompletionIfError() throws {
         // When :
-        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
+        networkService.fetchRecipes(for: FakeResponseData.badUrl) { (result) in
             // Then :
             guard case .failure(let error) = result else {
                 return
@@ -33,9 +32,8 @@ class RecipleaseTests: XCTestCase {
     }
     
     func testItWorkWithGoodData() throws {
-        networkService.fetchRecipes(for: "chicken") { (result) in
+        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
             guard case .success(let success) = result else { return }
-//            XCTAssertEqual(result, success)
             XCTAssertNotNil(success)
 
         }

@@ -14,6 +14,7 @@ import Alamofire
 class UrlProtocolMock: URLProtocol {
     // this dictionary maps URLs to test data
     static var testURLs = [URL?: Data]()
+    
     override class func canInit(with request: URLRequest) -> Bool {
         return true
     }
@@ -21,8 +22,8 @@ class UrlProtocolMock: URLProtocol {
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         return request
     }
-    
-    
+ 
+
     
     
     override func startLoading() {
@@ -33,6 +34,7 @@ class UrlProtocolMock: URLProtocol {
                 // …load it immediately.
                 client?.urlProtocol(self, didLoad: FakeResponseData.getCorrectDataFor(resource: "Edamam"))
                 self.client?.urlProtocol(self, didLoad: data)
+                client?.urlProtocolDidFinishLoading(self)
                 // unless we have an incorrect url then load error
             } else {
                 client?.urlProtocol(self, didFailWithError: AFError.invalidURL(url: request.url!))

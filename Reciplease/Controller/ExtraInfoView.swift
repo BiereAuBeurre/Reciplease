@@ -8,7 +8,6 @@
 import UIKit
 
 class ExtraInfoView: UIView {
-    
     var recipe: Recipe? {
         didSet {
             refreshData()
@@ -25,8 +24,6 @@ class ExtraInfoView: UIView {
     
     func refreshData()  {
         // TODO: date formatter à checker, pas min
-    
-        
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
             self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
@@ -34,9 +31,13 @@ class ExtraInfoView: UIView {
             self.numberOfGuestsIcon.isHidden = true
             self.numberOfGuests.isHidden = true
         }
-        
         if let preparationTime = recipe?.totalTime {
-            self.preparationTime.text = " \(Int(preparationTime))"
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .brief
+            let dateTochange = preparationTime * 60
+            let formattedString = formatter.string(from: dateTochange)!//formatter.string(from:
+            self.preparationTime.text = formattedString
+             print(formattedString)
             self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
         } else {
             self.preparationTime.isHidden = true
@@ -45,7 +46,6 @@ class ExtraInfoView: UIView {
     }
     
     func configureView() {
-        
         preparationTime.textAlignment = .natural
         preparationTime.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.font = UIFont.preferredFont(forTextStyle: .caption1)
@@ -67,29 +67,25 @@ class ExtraInfoView: UIView {
         prepTimeStackView.axis = .horizontal
         numbOfGuestStackView.addArrangedSubview(numberOfGuestsIcon)
         numbOfGuestStackView.addArrangedSubview(numberOfGuests)
-        
         prepTimeStackView.addArrangedSubview(preparationTimeIcon)
         prepTimeStackView.addArrangedSubview(preparationTime)
-        
         parentStackView.addArrangedSubview(prepTimeStackView)
         parentStackView.addArrangedSubview(numbOfGuestStackView)
-        
         addSubview(parentStackView)
         
         // MARK: - Constraints
         NSLayoutConstraint.activate([
             preparationTimeIcon.heightAnchor.constraint(equalToConstant: 20),
             preparationTimeIcon.widthAnchor.constraint(equalToConstant: 20),
-
             numberOfGuestsIcon.heightAnchor.constraint(equalToConstant: 20),
             numberOfGuestsIcon.widthAnchor.constraint(equalToConstant: 20),
-            
             parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            parentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
-            parentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
-            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
+            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+
+            self.bottomAnchor.constraint(equalTo: parentStackView.bottomAnchor, constant: 4),
+            //parentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            self.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 4),
+            //parentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
         ])
-        
     }
 }
-
