@@ -91,7 +91,6 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
             } catch { print(error) }
         } else {
             fetchRecipes()
-            if recipes.isEmpty { viewState = .empty }
         }
 //        if recipes.isEmpty { viewState = .empty } else { viewState = .showData(recipes) }
     }
@@ -109,26 +108,16 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-    private func resetState() {
-//        viewState = .loading
-    }
     
-    private func displayEmptyView2() {
-        let backgroundImage = UIImage.init(named: "noRecipeFoundnobg")
-        let backgroundImageView = UIImageView.init(frame: self.view.frame)
-        backgroundImageView.image = backgroundImage
-        backgroundImageView.alpha = 1
-        view.insertSubview(backgroundImageView, at: 0)
-    }
+    private func resetState() {} // ??
     
     private func displayEmptyView() {
         let backgroundImage = UITextView.init(frame: self.view.frame)
-//        var backgroundImageText = backgroundImage.text
         backgroundImage.font = UIFont.preferredFont(forTextStyle: .headline)
         backgroundImage.textAlignment = .center
         backgroundImage.isEditable = false
         if dataMode == .coreData { backgroundImage.text = "\n\n\nYou do not have favorites recipes yet !" }
-        else if dataMode == .api { backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please" }
+        else { backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please" }
         view.insertSubview(backgroundImage, at: 0)
     }
     
@@ -140,11 +129,12 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
 //                self.viewState = .empty
                 
             case .success(let recipesInfo):
+                self.recipes = recipesInfo.recipes
+                self.viewState = .showData(recipesInfo.recipes)
+
                 if recipesInfo.recipes.isEmpty {
                     self.viewState = .empty
                 } else {
-                self.recipes = recipesInfo.recipes
-                self.viewState = .showData(recipesInfo.recipes)
                 print(recipesInfo.recipes.count)
                 }
 
@@ -156,7 +146,6 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
     }
     
     func displayRecipeDetailFor(_ recipe: Recipe) {
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let detailsViewController = storyboard.instantiateViewController(withIdentifier: "DetailsVC") as? DetailsViewController else { return }
         detailsViewController.recipe = recipe

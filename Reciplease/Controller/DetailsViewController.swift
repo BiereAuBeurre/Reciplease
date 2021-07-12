@@ -62,7 +62,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         extraInfoView.configureView()
         backgroundPicture.addSubview(extraInfoView)
         extraInfoView.preparationTimeIcon.tintColor = .label
-        
+        extraInfoView.alpha = 2
         backgroundPicture.bringSubviewToFront(extraInfoView)
     }
     
