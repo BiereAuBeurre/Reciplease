@@ -9,9 +9,12 @@ import Foundation
 import Alamofire
 
 class RecipeService {
-    
-    static let shared = RecipeService()
-    private init() {}
+    private let session: Session
+    init(session: Session = .default) {
+    self.session = session
+    }
+//    static let shared = RecipeService()
+//    private init() {}
     
     func fetchRecipes(for searchTerms: String, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
         let url = "https://api.edamam.com/search?q=\(searchTerms)&app_key=b5144453065bd0a94728a7da37aa3548&app_id=d698f1a4&to=100"

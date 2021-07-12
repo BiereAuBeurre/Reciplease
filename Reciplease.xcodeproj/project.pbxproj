@@ -29,6 +29,9 @@
 		EF6E098F266A4036003F725F /* LoadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E098E266A4036003F725F /* LoadImage.swift */; };
 		EF6E099B266A43C5003F725F /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E099A266A43C5003F725F /* RecipeCell.swift */; };
 		EF6E09A5266A8434003F725F /* AddCornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E09A4266A8434003F725F /* AddCornerRadius.swift */; };
+		EFA9DD172696FB35004F2E3D /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9DD162696FB35004F2E3D /* URLProtocolMock.swift */; };
+		EFA9DD192696FBDE004F2E3D /* FakeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9DD182696FBDE004F2E3D /* FakeResponseData.swift */; };
+		EFA9DD1B2696FDE7004F2E3D /* Edamam.json in Resources */ = {isa = PBXBuildFile; fileRef = EFA9DD1A2696FDE7004F2E3D /* Edamam.json */; };
 		EFB1E8A3265E898B00AE668D /* AddDoneToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB1E8A2265E898B00AE668D /* AddDoneToolBar.swift */; };
 		EFF8CAAA2686122000B46165 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF8CAA92686122000B46165 /* StorageService.swift */; };
 		EFF8CAAC2686178C00B46165 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF8CAAB2686178C00B46165 /* DetailsViewController.swift */; };
@@ -86,6 +89,9 @@
 		EF6E098E266A4036003F725F /* LoadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImage.swift; sourceTree = "<group>"; };
 		EF6E099A266A43C5003F725F /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		EF6E09A4266A8434003F725F /* AddCornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCornerRadius.swift; sourceTree = "<group>"; };
+		EFA9DD162696FB35004F2E3D /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
+		EFA9DD182696FBDE004F2E3D /* FakeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponseData.swift; sourceTree = "<group>"; };
+		EFA9DD1A2696FDE7004F2E3D /* Edamam.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Edamam.json; sourceTree = "<group>"; };
 		EFB1E8A2265E898B00AE668D /* AddDoneToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDoneToolBar.swift; sourceTree = "<group>"; };
 		EFF8CAA92686122000B46165 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		EFF8CAAB2686178C00B46165 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +193,9 @@
 			children = (
 				EF13F2E0265BEAC40063AF7E /* RecipleaseTests.swift */,
 				EF13F2E2265BEAC40063AF7E /* Info.plist */,
+				EFA9DD162696FB35004F2E3D /* URLProtocolMock.swift */,
+				EFA9DD182696FBDE004F2E3D /* FakeResponseData.swift */,
+				EFA9DD1A2696FDE7004F2E3D /* Edamam.json */,
 			);
 			path = RecipleaseTests;
 			sourceTree = "<group>";
@@ -410,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFA9DD1B2696FDE7004F2E3D /* Edamam.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +564,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF13F2E1265BEAC40063AF7E /* RecipleaseTests.swift in Sources */,
+				EFA9DD172696FB35004F2E3D /* URLProtocolMock.swift in Sources */,
+				EFA9DD192696FBDE004F2E3D /* FakeResponseData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

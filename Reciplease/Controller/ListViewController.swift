@@ -32,16 +32,8 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
     var extraInfoView = ExtraInfoView()
     let activityIndicator = UIActivityIndicatorView(style: .large)
 
-
+    let recipeService = RecipeService()
     var ingredients: String = ""
-//    var recipes: [Recipe] = [] {
-//        didSet {
-//            if recipes.isEmpty {
-//                viewState = .empty
-//            }
-//        }
-//    }
-
     var recipes: [Recipe] = []
     var dataMode: DataMode = .coreData
 
@@ -92,13 +84,16 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
                 recipes = try StorageService.sharedStorageService.loadRecipes()
                 self.activityIndicator.stopAnimating()
                 if recipes.isEmpty { viewState = .empty
-                } else {
+                }
+                else {
                     viewState = .showData(recipes)
                 }
             } catch { print(error) }
         } else {
             fetchRecipes()
+            if recipes.isEmpty { viewState = .empty }
         }
+//        if recipes.isEmpty { viewState = .empty } else { viewState = .showData(recipes) }
     }
     
     private func setupView() {
@@ -118,7 +113,7 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
 //        viewState = .loading
     }
     
-    private func displayEmptyView() {
+    private func displayEmptyView2() {
         let backgroundImage = UIImage.init(named: "noRecipeFoundnobg")
         let backgroundImageView = UIImageView.init(frame: self.view.frame)
         backgroundImageView.image = backgroundImage
@@ -126,9 +121,20 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         view.insertSubview(backgroundImageView, at: 0)
     }
     
+    private func displayEmptyView() {
+        let backgroundImage = UITextView.init(frame: self.view.frame)
+//        var backgroundImageText = backgroundImage.text
+        backgroundImage.font = UIFont.preferredFont(forTextStyle: .headline)
+        backgroundImage.textAlignment = .center
+        backgroundImage.isEditable = false
+        if dataMode == .coreData { backgroundImage.text = "\n\n\nYou do not have favorites recipes yet !" }
+        else if dataMode == .api { backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please" }
+        view.insertSubview(backgroundImage, at: 0)
+    }
+    
     private func fetchRecipes() {
         viewState = .loading
-        RecipeService.shared.fetchRecipes(for: ingredients) { result in
+        recipeService.fetchRecipes(for: ingredients) { result in
             switch result {
 //            case .success(let recipesInfo) where recipesInfo.recipes.isEmpty:
 //                self.viewState = .empty

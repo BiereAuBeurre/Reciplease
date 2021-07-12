@@ -61,6 +61,9 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         extraInfoView.recipe = recipe
         extraInfoView.configureView()
         backgroundPicture.addSubview(extraInfoView)
+        extraInfoView.preparationTimeIcon.tintColor = .label
+        
+        backgroundPicture.bringSubviewToFront(extraInfoView)
     }
     
     private func addToFavorite() {
@@ -71,7 +74,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
             
         } catch {
             print(error)
-            showAlert("Can't save recipe to favorite", "Please try again later")// créer une vrai uialert "pas de sauvegade possible"
+            showAlert("Can't save recipe to favorite", "Please try again later")
         }
     }
     

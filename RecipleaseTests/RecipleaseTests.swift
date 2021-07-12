@@ -10,26 +10,47 @@ import Alamofire
 @testable import Reciplease
 
 class RecipleaseTests: XCTestCase {
-//    let bonjour = RecipeService.shared.fetchRecipes(for: "chicken", completion: (Result<RecipesInfo, AFError>) -> Void)
+    var session: Session!
+    var networkService: RecipeService!
+
+    override func setUp() {
+        let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [UrlProtocolMock.self]
+        session = Session(configuration: configuration)
+        networkService = RecipeService(session: session)
+
+    }
+
+    func testGetRecipesShouldPostFailedCompletionIfError() throws {
+        // When :
+        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
+            // Then :
+            guard case .failure(let error) = result else {
+                return
+            }
+            XCTAssertNotNil(error)
+        }
+    }
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    func testItWorkWithGoodData() throws {
+        networkService.fetchRecipes(for: "chicken") { (result) in
+            guard case .success(let success) = result else { return }
+//            XCTAssertEqual(result, success)
+            XCTAssertNotNil(success)
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
         }
     }
 
+
+    func testGetRecipesShouldPostFailedCompletionIfIncorrectData() throws {
+        // Given :
+        // When :
+        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
+            // Then :
+            guard case .failure(let error) = result else {
+                return
+            }
+            XCTAssertNotNil(error)
+        }
+    }
 }
