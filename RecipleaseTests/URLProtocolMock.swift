@@ -6,14 +6,11 @@
 //
 
 import Foundation
-import Alamofire
-
-@testable import Reciplease
-
+import XCTest
 
 class UrlProtocolMock: URLProtocol {
-    // this dictionary maps URLs to test data
-    static var testURLs = [URL?: Data]()
+    static var error: Error?
+    static var data: Data?
     
     override class func canInit(with request: URLRequest) -> Bool {
         return true
@@ -23,26 +20,19 @@ class UrlProtocolMock: URLProtocol {
         return request
     }
  
-
-    
-    
     override func startLoading() {
-        // if we have a valid URL…
-        if let url = request.url {
-            // …and if we have test data for that URL…
-            if let data = UrlProtocolMock.testURLs[url] {
-                // …load it immediately.
-                client?.urlProtocol(self, didLoad: FakeResponseData.getCorrectDataFor(resource: "Edamam"))
-                self.client?.urlProtocol(self, didLoad: data)
-                client?.urlProtocolDidFinishLoading(self)
-                // unless we have an incorrect url then load error
-            } else {
-                client?.urlProtocol(self, didFailWithError: AFError.invalidURL(url: request.url!))
-            }
+        if let error = UrlProtocolMock.error {
+            client?.urlProtocol(self, didFailWithError: error)
+            client?.urlProtocolDidFinishLoading(self)
+            return
         }
-        //        switch response {}
-        //        client?.urlProtocol(self, didFailWithError: AFError.invalidURL(url: request.url!))
-        //        client?.urlProtocol(self, didLoad: FakeResponseData.getCorrectDataFor(resource: "Edamam"))
+        guard let data = UrlProtocolMock.data else {
+            XCTFail("success data's missing")
+            return
+        }
+        client?.urlProtocol(self, didLoad: data)
+        client?.urlProtocolDidFinishLoading(self)
     }
+    
         override func stopLoading() {}
 }

@@ -6,49 +6,52 @@
 //
 
 import XCTest
-import Alamofire
+@testable import Alamofire
 @testable import Reciplease
 
 class RecipleaseTests: XCTestCase {
     var session: Session!
     var networkService: RecipeService!
-
+    
     override func setUp() {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [UrlProtocolMock.self]
         session = Session(configuration: configuration)
         networkService = RecipeService(session: session)
     }
-
-    func testGetRecipesShouldPostFailedCompletionIfError() throws {
-        // When :
-        networkService.fetchRecipes(for: FakeResponseData.badUrl) { (result) in
-            // Then :
+    
+    override func tearDownWithError() throws {
+        UrlProtocolMock.data = nil
+        UrlProtocolMock.error = nil
+    }
+    
+    func testGetRecipesShouldPostFailed() throws {
+        UrlProtocolMock.error = AFError.explicitlyCancelled
+        let expectation = XCTestExpectation(description: "get recipes")
+        networkService.fetchRecipes(for: "chicken") { (result) in
             guard case .failure(let error) = result else {
+                XCTFail("missing failure error")
                 return
             }
             XCTAssertNotNil(error)
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 1)
     }
     
     func testItWorkWithGoodData() throws {
-        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
-            guard case .success(let success) = result else { return }
-            XCTAssertNotNil(success)
-
-        }
-    }
-
-
-    func testGetRecipesShouldPostFailedCompletionIfIncorrectData() throws {
-        // Given :
-        // When :
-        networkService.fetchRecipes(for: "chicken egg avocado cheese rosemary coconut") { (result) in
-            // Then :
-            guard case .failure(let error) = result else {
+        UrlProtocolMock.data = FakeResponseData.recipeData
+        let expectation = XCTestExpectation(description: "get recipes")
+        networkService.fetchRecipes(for: "pasta") { (result) in
+            guard case .success(let recipes) = result else {
+                XCTFail("missing success data")
                 return
             }
-            XCTAssertNotNil(error)
+            XCTAssertNotNil(recipes)
+            let recipe = try! XCTUnwrap(recipes.recipes.first, "missing recipe")
+            XCTAssertEqual(recipe.name, "Chicken Egg Bake recipes")
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 1)
     }
 }

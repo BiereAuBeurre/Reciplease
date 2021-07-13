@@ -47,19 +47,18 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
                 activityIndicator.startAnimating()
                 print("loading")
             case .empty :
-//                self.recipes = []
                 activityIndicator.stopAnimating()
                 displayEmptyView()
                 tableView.isHidden = true
                 print("empty")
             case .error :
-                print("error")// présenter une alerte
+                showAlert("Error", "Something went wrong, try again please")
+                print("error")/// remplacer par une alerte comme ça ?
             case .showData(let recipes) :
                 print("datas are shown")
                 self.recipes = recipes
                 tableView.reloadData()
                 activityIndicator.stopAnimating()
-                
                 tableView.isHidden = false
             }
         }
@@ -92,11 +91,10 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         } else {
             fetchRecipes()
         }
-//        if recipes.isEmpty { viewState = .empty } else { viewState = .showData(recipes) }
     }
     
     private func setupView() {
-        // to clean extra useless separator for empty cells in fav
+        /// To clean extra useless separator for empty cells in fav
         self.tableView.tableFooterView = UIView()
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .systemGray
@@ -113,11 +111,15 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
     
     private func displayEmptyView() {
         let backgroundImage = UITextView.init(frame: self.view.frame)
+        backgroundImage.text = ""
         backgroundImage.font = UIFont.preferredFont(forTextStyle: .headline)
         backgroundImage.textAlignment = .center
         backgroundImage.isEditable = false
-        if dataMode == .coreData { backgroundImage.text = "\n\n\nYou do not have favorites recipes yet !" }
-        else { backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please" }
+        if dataMode == .coreData {
+            backgroundImage.text = "\n\n\nYou do not have favorites recipes yet !"
+        } else {
+            backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please"
+        }
         view.insertSubview(backgroundImage, at: 0)
     }
     
@@ -131,13 +133,9 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
             case .success(let recipesInfo):
                 self.recipes = recipesInfo.recipes
                 self.viewState = .showData(recipesInfo.recipes)
-
                 if recipesInfo.recipes.isEmpty {
                     self.viewState = .empty
-                } else {
-                print(recipesInfo.recipes.count)
                 }
-
             case .failure(let error):
                 print("Erreur :\(error)")
                 self.showAlert("Error", "Can't load recipes. Please check your connection to internet and try again")
