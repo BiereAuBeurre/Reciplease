@@ -18,7 +18,7 @@ final class FakeResponseData {
         return recipeInfo.recipes
     }
     
-    static var recipeData: Data { // Méthode intelligente
+    static var recipeData: Data {
         let bundle = Bundle(for: FakeResponseData.self)
         let url = bundle.url(forResource: "Edamam", withExtension: "json")
         return try! Data(contentsOf: url!)

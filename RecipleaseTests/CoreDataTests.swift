@@ -54,7 +54,34 @@ class CoreDataTests: XCTestCase {
             XCTFail("error saving \(error.localizedDescription)")
         }
         XCTAssertFalse(loadedRecipes.isEmpty, "")
+        XCTAssertTrue(loadedRecipes.count == 1)
+        XCTAssertTrue(((loadedRecipes.first?.name) != nil), "Chicken Egg Bake recipes")
         //tableau.count = le bon nombre de recettes, première recette avec le nom
     }
-    func testRecipeDeletion() {}
+    func testRecipeDeletion() {
+        var loadedRecipes: [Recipe] = []
+        
+        let recipe = FakeResponseData.recipe.first!
+        // faire une boucle for each recipes
+        do {
+            try storageService.saveRecipe(recipe)
+        } catch {
+            XCTFail("error saving \(error.localizedDescription)")
+        }
+        do {
+            try storageService.deleteRecipe(recipe)
+        } catch {
+            XCTFail("error deleting \(error.localizedDescription)")
+        }
+        
+        do {
+           loadedRecipes = try storageService.loadRecipes()
+        } catch {
+            XCTFail("error saving \(error.localizedDescription)")
+        }
+        
+        XCTAssertTrue(loadedRecipes.count == 0)
+        XCTAssertTrue(loadedRecipes == [])
+    }
+    
 }
