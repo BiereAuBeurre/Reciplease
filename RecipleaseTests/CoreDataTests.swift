@@ -9,10 +9,16 @@ import XCTest
 @testable import Reciplease
 
 class CoreDataTests: XCTestCase {
+    
     var storageService: StorageService!
+    let recipe = FakeResponseData.recipe.first!
+    let recipe2 = FakeResponseData.recipe[1]
+    let recipe3 = FakeResponseData.recipe[2]
+    var loadedRecipes: [Recipe] = []
     
     override func setUp() {
         super.setUp()
+        loadedRecipes = [recipe, recipe2, recipe3]
         // MARK: - managedObjectModel
         let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle.main])!
         
@@ -30,22 +36,16 @@ class CoreDataTests: XCTestCase {
                 fatalError("Persistent container creation failed : \(error.userInfo)")
             }
         }
-        
         storageService = StorageService(persistentContainer: persistentContainer)
-        
     }
     
     override func tearDown() {
         storageService = nil
+        loadedRecipes = []
         super.tearDown()
     }
     
-    func testRecipeLoading() {
-        let recipe = FakeResponseData.recipe.first!
-        let recipe2 = FakeResponseData.recipe[1]
-        let recipe3 = FakeResponseData.recipe[2]
-        var loadedRecipes: [Recipe] = [recipe, recipe2, recipe3]
-        // faire une boucle for each recipes
+    func testRecipeSavingAndLoading() throws {
         for recipe in loadedRecipes {
             do {
                 try storageService.saveRecipe(recipe)
@@ -57,27 +57,15 @@ class CoreDataTests: XCTestCase {
             } catch {
                 XCTFail("error loading \(error.localizedDescription)")
             }
-            //            XCTAssertFalse(loadedRecipes.isEmpty, "")
-            //            XCTAssertTrue(loadedRecipes.count == 3)
-            //            XCTAssertTrue(((loadedRecipes.first?.name) != nil), "The Crispy Egg")
-            //            XCTAssertTrue((loadedRecipes[1].name) == "Egg Noodle")
         }
         XCTAssertFalse(loadedRecipes.isEmpty)
         XCTAssertTrue(loadedRecipes.count == 3)
         XCTAssertTrue(loadedRecipes.first?.name == "Egg Noodle")
         XCTAssertTrue((loadedRecipes[1].name) == "The Crispy Egg")
         XCTAssertFalse(loadedRecipes[1].name.isEmpty)
-        
-        //tableau.count = le bon nombre de recettes, première recette avec le nom
     }
-    func testRecipeDeletion() {
-        let recipe = FakeResponseData.recipe.first!
-        let recipe2 = FakeResponseData.recipe[1]
-        let recipe3 = FakeResponseData.recipe[2]
- 
-
-        var loadedRecipes: [Recipe] = [recipe, recipe2, recipe3]
-
+    
+    func testRecipeDeletion() throws {
         for recipe in loadedRecipes {
             do {
                 try storageService.saveRecipe(recipe)
@@ -89,16 +77,14 @@ class CoreDataTests: XCTestCase {
             } catch {
                 XCTFail("error deleting \(error.localizedDescription)")
             }
-            
             do {
-               loadedRecipes = try storageService.loadRecipes()
+                loadedRecipes = try storageService.loadRecipes()
             } catch {
                 XCTFail("error loading \(error.localizedDescription)")
             }
-    //        XCTAssertTrue(loadedRecipes.isEmpty)
+            XCTAssertTrue(loadedRecipes.isEmpty)
             XCTAssertTrue(loadedRecipes.count == 0)
         }
-
     }
     
 }

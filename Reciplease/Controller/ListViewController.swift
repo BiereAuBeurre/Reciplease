@@ -126,9 +126,6 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         viewState = .loading
         recipeService.fetchRecipes(for: ingredients) { result in
             switch result {
-//            case .success(let recipesInfo) where recipesInfo.recipes.isEmpty:
-//                self.viewState = .empty
-                
             case .success(let recipesInfo):
                 self.recipes = recipesInfo.recipes
                 self.viewState = .showData(recipesInfo.recipes)

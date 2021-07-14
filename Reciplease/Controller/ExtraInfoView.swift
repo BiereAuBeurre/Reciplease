@@ -36,7 +36,7 @@ class ExtraInfoView: UIView {
             formatter.unitsStyle = .brief
             let dateTochange = preparationTime * 60
             let formattedString = formatter.string(from: dateTochange)!//formatter.string(from:
-            self.preparationTime.text = formattedString
+            self.preparationTime.text = " \(formattedString)"
              print(formattedString)
             self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
         } else {
@@ -47,6 +47,7 @@ class ExtraInfoView: UIView {
     
     func configureView() {
         preparationTime.textAlignment = .natural
+//        preparationTime.adjustsFontSizeToFitWidth = true
         preparationTime.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.textAlignment = .natural
@@ -57,6 +58,7 @@ class ExtraInfoView: UIView {
         parentStackView.spacing = 0
         parentStackView.distribution = .fillEqually
         parentStackView.axis = .vertical
+        preparationTime.lineBreakMode = .byWordWrapping
         numbOfGuestStackView.translatesAutoresizingMaskIntoConstraints = false
         prepTimeStackView.translatesAutoresizingMaskIntoConstraints = false
         numbOfGuestStackView.axis = .horizontal
@@ -79,13 +81,12 @@ class ExtraInfoView: UIView {
             preparationTimeIcon.widthAnchor.constraint(equalToConstant: 20),
             numberOfGuestsIcon.heightAnchor.constraint(equalToConstant: 20),
             numberOfGuestsIcon.widthAnchor.constraint(equalToConstant: 20),
-            parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-
-            self.bottomAnchor.constraint(equalTo: parentStackView.bottomAnchor, constant: 4),
-            //parentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
-            self.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 4),
-            //parentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
+            
+            parentStackView.widthAnchor.constraint(equalToConstant: 80),
+            parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
+//            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2),
+            self.bottomAnchor.constraint(equalTo: parentStackView.bottomAnchor, constant: 2),
+            self.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 2),
         ])
     }
 }

@@ -31,7 +31,6 @@ struct Recipe: Decodable {
         case recipeUrl = "url"
         case totalTime
         case yield
-        
         case ingredients = "ingredientLines"
 
     }
