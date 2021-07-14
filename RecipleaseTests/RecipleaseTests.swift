@@ -39,7 +39,7 @@ class RecipleaseTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
-    func testItWorkWithGoodData() throws {
+    func testGetRecipesShouldWork() throws {
         UrlProtocolMock.data = FakeResponseData.recipeData
         let expectation = XCTestExpectation(description: "get recipes")
         networkService.fetchRecipes(for: "pasta") { (result) in
@@ -54,4 +54,5 @@ class RecipleaseTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 1)
     }
+    
 }

@@ -7,36 +7,12 @@
 
 import CoreData
 
-enum StorageType {
-  case persistent, inMemory
-}
-
 class StorageService {
-    //storage : test load delete et save, utiliser une autre bdd = coreDataBase en mémoire, pas persistée
-    //créer persistent container en memoire et le passer poru qu'il soit utiliser, avoir fake recette dans fake data et le sauver, loader et delete
 
-    /*  let persistentContainer: NSPersistentContainer
-     
-     init(_ storageType: StorageType = .persistent) {
-       self.persistentContainer = NSPersistentContainer(name: "YourDataStore")
-
-       if storageType == .inMemory {
-         let description = NSPersistentStoreDescription()
-         description.url = URL(fileURLWithPath: "/dev/null")
-         self.persistentContainer.persistentStoreDescriptions = [description]
-       }
-
-       self.persistentContainer.loadPersistentStores(completionHandler: { (storeDescription, error) in
-         if let error = error as NSError? {
-           fatalError("Unresolved error \(error), \(error.userInfo)")
-         }
-       })
-     }*/
-    
-    static let sharedStorageService = StorageService()
+    static let shared = StorageService()
     let viewContext: NSManagedObjectContext
 
-    private init(persistentContainer: NSPersistentContainer = AppDelegate.persistentContainer) {
+    init(persistentContainer: NSPersistentContainer = AppDelegate.persistentContainer) {
         // passer un persistentContainer par défaut
         self.viewContext = persistentContainer.viewContext
     }
@@ -51,8 +27,6 @@ class StorageService {
             throw error
         }
         //convertir en boucle et implémenter le loadrecipes et favorites
-        
-        
         let recipes = recipeEntities.map { (recipeEntity) -> Recipe in
             return Recipe(from: recipeEntity)
         }
@@ -72,7 +46,6 @@ class StorageService {
                 try viewContext.save()
             } catch {
                 // Show some error here
-//                print(error)
                 throw error
             }
         }

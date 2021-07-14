@@ -36,7 +36,6 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
     var ingredients: String = ""
     var recipes: [Recipe] = []
     var dataMode: DataMode = .coreData
-
     
     var viewState: State<[Recipe]> = .loading {
         didSet {
@@ -80,7 +79,7 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
     private func setUpDataToLoad() {
         if dataMode == .coreData {
             do {
-                recipes = try StorageService.sharedStorageService.loadRecipes()
+                recipes = try StorageService.shared.loadRecipes()
                 self.activityIndicator.stopAnimating()
                 if recipes.isEmpty { viewState = .empty
                 }
@@ -117,7 +116,7 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         backgroundImage.isEditable = false
         if dataMode == .coreData {
             backgroundImage.text = "\n\n\nYou do not have favorites recipes yet !"
-        } else {
+        } else if dataMode == .api {
             backgroundImage.text = "\n\nNo recipe found with those ingredients.\nTry something else please"
         }
         view.insertSubview(backgroundImage, at: 0)
@@ -189,7 +188,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         if editingStyle == .delete {
             do {
                 // deleting the recipe in the core data "memory"
-                try StorageService.sharedStorageService.deleteRecipe(recipes[indexPath.row])
+                try StorageService.shared.deleteRecipe(recipes[indexPath.row])
             } catch  {
                 print("error")
             }

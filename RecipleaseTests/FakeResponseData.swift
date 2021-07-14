@@ -6,13 +6,17 @@
 //
 
 import Foundation
+@testable import Reciplease
 
 final class FakeResponseData {
         
     class FakeError: Error {}
     static let error = FakeError()
     
-    
+    static var recipe: [Recipe] {
+        let recipeInfo = try! JSONDecoder().decode(RecipesInfo.self, from: recipeData)
+        return recipeInfo.recipes
+    }
     
     static var recipeData: Data { // Méthode intelligente
         let bundle = Bundle(for: FakeResponseData.self)

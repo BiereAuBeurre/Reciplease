@@ -14,6 +14,8 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     private var isRecipeFavorite = false
     var extraInfoView = ExtraInfoView()
 
+    
+    
     @IBOutlet weak var ingredientsTitle: UILabel!
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
@@ -69,7 +71,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     private func addToFavorite() {
         guard let recipe = recipe else { return }
         do {
-            try StorageService.sharedStorageService.saveRecipe(recipe)
+            try StorageService.shared.saveRecipe(recipe)
             fetchFavoriteState()
             
         } catch {
@@ -82,7 +84,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     func removeFromFavorite() {
         guard let recipe = recipe else { return }
         do {
-            try StorageService.sharedStorageService.deleteRecipe(recipe)
+            try StorageService.shared.deleteRecipe(recipe)
             isRecipeFavorite = false
             
         } catch {
@@ -92,7 +94,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     
     private func fetchFavoriteState() {
         guard let recipe = recipe else { return }
-        let recipes = try? StorageService.sharedStorageService.loadRecipes()
+        let recipes = try? StorageService.shared.loadRecipes()
         guard let _ = recipes?.first(where: { $0 == recipe }) else { isRecipeFavorite = false; return }
         isRecipeFavorite = true
     }
