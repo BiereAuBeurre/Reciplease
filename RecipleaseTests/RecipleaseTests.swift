@@ -49,7 +49,7 @@ class RecipleaseTests: XCTestCase {
             }
             XCTAssertNotNil(recipes)
             let recipe = try! XCTUnwrap(recipes.recipes.first, "missing recipe")
-            XCTAssertEqual(recipe.name, "Chicken Egg Bake recipes")
+            XCTAssertEqual(recipe.name, "The Crispy Egg")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)

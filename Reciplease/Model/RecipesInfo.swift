@@ -56,12 +56,6 @@ extension Recipe {
         self.recipeUrl = recipeEntity.recipeUrl ?? ""
         self.imageUrl = recipeEntity.imageUrl ?? ""
         self.ingredients = recipeEntity.ingredients?.components(separatedBy: ",") ?? []
- 
-
-//        self.ingredients = Array(recipeEntity.ingredients?)
-//        self.ingredients = (recipeEntity.ingredients?.components(separatedBy: ", \n - "))!
-//        self.ingredients.joined() = recipeEntity.ingredients // faire l'inverse de joined()
-        
         self.yield = recipeEntity.yield
         self.totalTime = recipeEntity.totalTime
     }
