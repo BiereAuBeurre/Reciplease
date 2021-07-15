@@ -13,7 +13,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     var recipe: Recipe?
     private var isRecipeFavorite = false
     var extraInfoView = ExtraInfoView()
-
+    
     
     
     @IBOutlet weak var ingredientsTitle: UILabel!
@@ -41,6 +41,8 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     // MARK: - Methods
     
     private func setUpView() {
+        extraInfoView.configureView()
+
         button.addCornerRadius()
         recipeName.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         recipeName.numberOfLines = 0
@@ -49,26 +51,17 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         ingredientsTitle.text = "What you'll need :"
         recipeName.text = recipe?.name
         ingredients.adjustsFontSizeToFitWidth = true
-        
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
         
-        if let bgPic = recipe?.imageUrl {
-            backgroundPicture.loadImage(bgPic)
-
+        if let loadedBackgroundPicture = recipe?.imageUrl {
+            backgroundPicture.loadImage(loadedBackgroundPicture)
         }
-        
-//        if recipe?.imageUrl == nil {
-//            backgroundPicture.image = UIImage(named: "defaultRecipe")
-//        } else {
-//            backgroundPicture.loadImage((recipe?.imageUrl)!)
-//        }
-
         extraInfoView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundPicture.addSubview(extraInfoView)
+        view.addSubview(extraInfoView)
         view.bringSubviewToFront(extraInfoView)
-        
+        extraInfoView.preparationTimeIcon.tintColor = .systemGreen
+
         NSLayoutConstraint.activate([
-//            extraInfoView.leadingAnchor.constraint(equalTo: backgroundPicture.trailingAnchor, constant: 25),
             backgroundPicture.trailingAnchor.constraint(equalTo: extraInfoView.trailingAnchor, constant: 2),
             extraInfoView.topAnchor.constraint(equalTo: backgroundPicture.topAnchor, constant:100),
         ])
@@ -86,7 +79,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
-//    private
+    //    private
     func removeFromFavorite() {
         guard let recipe = recipe else { return }
         do {
