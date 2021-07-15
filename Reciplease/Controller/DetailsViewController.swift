@@ -52,8 +52,8 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
         
-        if let backGroundPicture = recipe?.imageUrl {
-            backgroundPicture.loadImage(backGroundPicture)
+        if let bgPic = recipe?.imageUrl {
+            backgroundPicture.loadImage(bgPic)
 
         }
         
@@ -68,7 +68,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         view.bringSubviewToFront(extraInfoView)
         
         NSLayoutConstraint.activate([
-            extraInfoView.leadingAnchor.constraint(equalTo: backgroundPicture.trailingAnchor, constant: 25),
+//            extraInfoView.leadingAnchor.constraint(equalTo: backgroundPicture.trailingAnchor, constant: 25),
             backgroundPicture.trailingAnchor.constraint(equalTo: extraInfoView.trailingAnchor, constant: 2),
             extraInfoView.topAnchor.constraint(equalTo: backgroundPicture.topAnchor, constant:100),
         ])
