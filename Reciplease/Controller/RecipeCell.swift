@@ -19,39 +19,35 @@ class RecipeCell: UITableViewCell {
     var recipe: Recipe? {
         didSet {
             refreshData()
-            extraInfoView.refreshData()
-
         }
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-//        extraInfoView.configureView()
         configureCell()
+        extraInfoView.configureView()
+
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-//        extraInfoView.configureView()
         configureCell()
+        extraInfoView.configureView()
+
     }
     
     // MARK: Methods
     
     /// Setting values of the view with values of the recipe object
     private func refreshData() {
-        
-        /// RAJOUTE
-        
-//        extraInfoView.configureView()
         recipeNameLabel.text = recipe?.name
         ingredientsPreviewLabel.text = recipe?.ingredients.joined(separator: ", ")
         extraInfoView.recipe = recipe
-        extraInfoView.refreshData()
+//        extraInfoView.refreshData()
 
         if let image = recipe?.imageUrl { /// We first check we have an imageUrl, then we had it as background image
             cellBackgroundImage.loadImage(image)
-        } else { /// if we do not havec imageUrl, then we set a default image from asset as background pic
+        } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic
             cellBackgroundImage.image = UIImage(named: "defaultRecipe")
             cellBackgroundImage.alpha = 0.55
         }
@@ -59,7 +55,6 @@ class RecipeCell: UITableViewCell {
     
     // MARK: - Setting constraints and displaying rules
     private func configureCell() {
-        extraInfoView.configureView()
 
         // MARK: BACKGROUND PIC
         cellBackgroundImage.translatesAutoresizingMaskIntoConstraints = false

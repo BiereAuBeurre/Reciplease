@@ -84,7 +84,7 @@ class ExtraInfoView: UIView {
             
             parentStackView.widthAnchor.constraint(equalToConstant: 80),
             parentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-//            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2),
+            parentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2),
             self.bottomAnchor.constraint(equalTo: parentStackView.bottomAnchor, constant: 2),
             self.trailingAnchor.constraint(equalTo: parentStackView.trailingAnchor, constant: 2),
         ])

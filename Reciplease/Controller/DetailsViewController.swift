@@ -52,20 +52,26 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
         
-        if recipe?.imageUrl == nil {
-            backgroundPicture.image = UIImage(named: "defaultRecipe")
-        } else {
-            backgroundPicture.loadImage((recipe?.imageUrl)!)
+        if let backGroundPicture = recipe?.imageUrl {
+            backgroundPicture.loadImage(backGroundPicture)
+
         }
-        extraInfoView.frame = CGRect(x: 360, y: 96, width: 200, height: 50)
-        extraInfoView.numberOfGuests.textColor = .label
-        extraInfoView.numberOfGuestsIcon.tintColor = .label
-        extraInfoView.recipe = recipe
-        extraInfoView.configureView()
+        
+//        if recipe?.imageUrl == nil {
+//            backgroundPicture.image = UIImage(named: "defaultRecipe")
+//        } else {
+//            backgroundPicture.loadImage((recipe?.imageUrl)!)
+//        }
+
+        extraInfoView.translatesAutoresizingMaskIntoConstraints = false
         backgroundPicture.addSubview(extraInfoView)
-        extraInfoView.preparationTimeIcon.tintColor = .label
-        extraInfoView.alpha = 2
-        backgroundPicture.bringSubviewToFront(extraInfoView)
+        view.bringSubviewToFront(extraInfoView)
+        
+        NSLayoutConstraint.activate([
+            extraInfoView.leadingAnchor.constraint(equalTo: backgroundPicture.trailingAnchor, constant: 25),
+            backgroundPicture.trailingAnchor.constraint(equalTo: extraInfoView.trailingAnchor, constant: 2),
+            extraInfoView.topAnchor.constraint(equalTo: backgroundPicture.topAnchor, constant:100),
+        ])
     }
     
     private func addToFavorite() {
