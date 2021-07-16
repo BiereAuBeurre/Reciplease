@@ -19,8 +19,8 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     @IBOutlet weak var ingredientsTitle: UILabel!
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
-    @IBOutlet weak var ingredients: UILabel!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var ingredients: UITextView!
     
     // MARK: - View life cycle methods
     
@@ -50,7 +50,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
         ingredientsTitle.font = UIFont.preferredFont(forTextStyle: .headline)
         ingredientsTitle.text = "What you'll need :"
         recipeName.text = recipe?.name
-        ingredients.adjustsFontSizeToFitWidth = true
+        ingredients.adjustsFontForContentSizeCategory = true
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
         
         if let loadedBackgroundPicture = recipe?.imageUrl {

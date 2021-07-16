@@ -222,12 +222,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFe-Nt-SWQ">
-                                <rect key="frame" x="16" y="420.5" width="382" height="281.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMp-yv-cVV">
                                 <rect key="frame" x="147" y="782" width="120" height="40"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
@@ -248,23 +242,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-5b-2qO">
+                                <rect key="frame" x="16" y="420.5" width="382" height="331.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uCa-Sp-K6w"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="kMp-yv-cVV" firstAttribute="centerX" secondItem="2RS-Qg-BGN" secondAttribute="centerX" id="01J-07-EKZ"/>
-                            <constraint firstItem="cFe-Nt-SWQ" firstAttribute="leading" secondItem="uCa-Sp-K6w" secondAttribute="leading" constant="16" id="06L-F9-O3D"/>
+                            <constraint firstItem="uCa-Sp-K6w" firstAttribute="trailing" secondItem="MHQ-5b-2qO" secondAttribute="trailing" constant="16" id="1Md-7x-fyH"/>
                             <constraint firstItem="zOR-rM-cSl" firstAttribute="top" secondItem="2RS-Qg-BGN" secondAttribute="top" id="2X8-Zb-BoH"/>
                             <constraint firstItem="uCa-Sp-K6w" firstAttribute="trailing" secondItem="kbk-Uj-tFu" secondAttribute="trailing" constant="16" id="5Rw-mb-eD4"/>
                             <constraint firstItem="zOR-rM-cSl" firstAttribute="trailing" secondItem="uCa-Sp-K6w" secondAttribute="trailing" id="6uY-eI-IE8"/>
-                            <constraint firstItem="kMp-yv-cVV" firstAttribute="top" secondItem="cFe-Nt-SWQ" secondAttribute="bottom" constant="80" id="FNt-1s-pbs"/>
                             <constraint firstItem="zOR-rM-cSl" firstAttribute="leading" secondItem="uCa-Sp-K6w" secondAttribute="leading" id="IgI-iF-k91"/>
-                            <constraint firstItem="cFe-Nt-SWQ" firstAttribute="top" secondItem="kbk-Uj-tFu" secondAttribute="bottom" constant="16" id="Mga-Ci-6Wg"/>
                             <constraint firstItem="kbk-Uj-tFu" firstAttribute="top" secondItem="2RS-Qg-BGN" secondAttribute="top" constant="384" id="V01-KK-WXZ"/>
                             <constraint firstItem="dv0-n8-Hs0" firstAttribute="top" secondItem="uCa-Sp-K6w" secondAttribute="top" constant="200" id="VQu-eb-7S7"/>
+                            <constraint firstItem="MHQ-5b-2qO" firstAttribute="top" secondItem="kbk-Uj-tFu" secondAttribute="bottom" constant="16" id="Z6N-VO-Xq5"/>
+                            <constraint firstItem="kMp-yv-cVV" firstAttribute="top" secondItem="MHQ-5b-2qO" secondAttribute="bottom" constant="30" id="ZLY-jA-9cz"/>
                             <constraint firstItem="uCa-Sp-K6w" firstAttribute="trailing" secondItem="dv0-n8-Hs0" secondAttribute="trailing" constant="8" id="ZhX-Om-KVs"/>
                             <constraint firstItem="kbk-Uj-tFu" firstAttribute="leading" secondItem="uCa-Sp-K6w" secondAttribute="leading" constant="16" id="efT-MB-Kdy"/>
-                            <constraint firstItem="uCa-Sp-K6w" firstAttribute="trailing" secondItem="cFe-Nt-SWQ" secondAttribute="trailing" constant="16" id="j84-4b-2tW"/>
+                            <constraint firstItem="MHQ-5b-2qO" firstAttribute="leading" secondItem="uCa-Sp-K6w" secondAttribute="leading" constant="16" id="kMh-aC-3rc"/>
                             <constraint firstItem="dv0-n8-Hs0" firstAttribute="leading" secondItem="uCa-Sp-K6w" secondAttribute="leading" constant="8" id="odp-zP-7OX"/>
                             <constraint firstItem="uCa-Sp-K6w" firstAttribute="bottom" secondItem="kMp-yv-cVV" secondAttribute="bottom" constant="40" id="rZG-wh-3iv"/>
                         </constraints>
@@ -272,7 +274,7 @@
                     <connections>
                         <outlet property="backgroundPicture" destination="zOR-rM-cSl" id="Ak8-nX-A1f"/>
                         <outlet property="button" destination="kMp-yv-cVV" id="p1I-k3-cSB"/>
-                        <outlet property="ingredients" destination="cFe-Nt-SWQ" id="kF2-OG-a8y"/>
+                        <outlet property="ingredients" destination="MHQ-5b-2qO" id="7SO-qY-VZw"/>
                         <outlet property="ingredientsTitle" destination="kbk-Uj-tFu" id="AQB-SO-1yR"/>
                         <outlet property="recipeName" destination="dv0-n8-Hs0" id="ODy-hc-5qB"/>
                     </connections>
