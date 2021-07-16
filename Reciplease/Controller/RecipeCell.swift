@@ -51,6 +51,12 @@ class RecipeCell: UITableViewCell {
             cellBackgroundImage.image = UIImage(named: "defaultRecipe")
             cellBackgroundImage.alpha = 0.55
         }
+        
+        if recipe?.totalTime == 0.0 {
+            extraInfoView.preparationTimeIcon.isHidden = true
+            extraInfoView.preparationTime.isHidden = true
+        }
+        
     }
     
     // MARK: - Setting constraints and displaying rules

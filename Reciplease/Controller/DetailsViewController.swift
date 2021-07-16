@@ -70,6 +70,10 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     private func addToFavorite() {
         guard let recipe = recipe else { return }
         do {
+            if recipe.totalTime == 0.0 {
+                extraInfoView.preparationTimeIcon.isHidden = true
+                extraInfoView.preparationTime.isHidden = true
+            }
             try StorageService.shared.saveRecipe(recipe)
             fetchFavoriteState()
             
@@ -77,6 +81,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
             print(error)
             showAlert("Can't save recipe to favorite", "Please try again later")
         }
+        
     }
     
     //    private
@@ -94,6 +99,13 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     private func fetchFavoriteState() {
         guard let recipe = recipe else { return }
         let recipes = try? StorageService.shared.loadRecipes()
+
+        if recipe.totalTime == 0.0 {
+            extraInfoView.preparationTimeIcon.isHidden = true
+            extraInfoView.preparationTime.isHidden = true
+        }
+        
+        
         guard let _ = recipes?.first(where: { $0 == recipe }) else { isRecipeFavorite = false; return }
         isRecipeFavorite = true
     }

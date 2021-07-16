@@ -29,7 +29,6 @@ enum State<Data> {
 }
 
 class ListViewController: UIViewController, UINavigationBarDelegate {
-    var extraInfoView = ExtraInfoView()
     let activityIndicator = UIActivityIndicatorView(style: .large)
 
     let recipeService = RecipeService()
