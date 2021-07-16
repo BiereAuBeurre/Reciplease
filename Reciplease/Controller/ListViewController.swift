@@ -28,10 +28,10 @@ enum State<Data> {
     case showData(Data)
 }
 
-class ListViewController: UIViewController, UINavigationBarDelegate {
+final class ListViewController: UIViewController, UINavigationBarDelegate {
     let activityIndicator = UIActivityIndicatorView(style: .large)
 
-    let recipeService = RecipeService()
+    private let recipeService = RecipeService()
     var ingredients: String = ""
     var recipes: [Recipe] = []
     var dataMode: DataMode = .coreData
@@ -138,7 +138,7 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         }
     }
     
-    func displayRecipeDetailFor(_ recipe: Recipe) {
+    private func displayRecipeDetailFor(_ recipe: Recipe) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let detailsViewController = storyboard.instantiateViewController(withIdentifier: "DetailsVC") as? DetailsViewController else { return }
         detailsViewController.recipe = recipe
@@ -150,6 +150,7 @@ class ListViewController: UIViewController, UINavigationBarDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
+
 // MARK: - TableView config
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -192,7 +193,6 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             recipes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        // TODO: mettre à jour le coeur sur vue détails de la recette
         if recipes.isEmpty {
             viewState = .empty
         }

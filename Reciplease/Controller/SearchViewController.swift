@@ -7,7 +7,8 @@
 
 import UIKit
 import Alamofire
-class SearchViewController: UIViewController {
+
+final class SearchViewController: UIViewController {
     
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var addIngredientButton: UIButton!
@@ -26,10 +27,8 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         clearList()
         self.activityIndicator.isHidden = true
-        
         searchRecipesButton.addCornerRadius()
         clearButton.addCornerRadius()
         addIngredientButton.addCornerRadius()
@@ -44,17 +43,12 @@ class SearchViewController: UIViewController {
         ingredientsArray.removeAll()
     }
     
-    func pushRecipeList() {
+    private func pushRecipeList() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let listViewController = storyboard.instantiateViewController(identifier: "ListViewController") as? ListViewController else { return }
         listViewController.ingredients = ingredientsListformatted()
         listViewController.recipes = recipes
         listViewController.dataMode = .api
-        
-//        if listViewController.recipes.isEmpty {
-//            listViewController.viewState = .empty
-//        }
-        
         navigationController?.isNavigationBarHidden = false
         navigationController?.pushViewController(listViewController, animated: true)
     }

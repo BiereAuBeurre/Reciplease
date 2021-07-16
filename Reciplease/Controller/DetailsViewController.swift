@@ -8,11 +8,11 @@
 import UIKit
 import SafariServices
 
-class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
-    var recipes: [Recipe] = []
+final class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
+    private var recipes: [Recipe] = []
     var recipe: Recipe?
     private var isRecipeFavorite = false
-    var extraInfoView = ExtraInfoView()
+    private var extraInfoView = ExtraInfoView()
     
     
     
@@ -85,7 +85,7 @@ class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     //    private
-    func removeFromFavorite() {
+    private func removeFromFavorite() {
         guard let recipe = recipe else { return }
         do {
             try StorageService.shared.deleteRecipe(recipe)

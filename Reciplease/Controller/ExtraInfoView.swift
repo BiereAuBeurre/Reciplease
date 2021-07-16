@@ -23,7 +23,6 @@ class ExtraInfoView: UIView {
     var numberOfGuestsIcon = UIImageView()
     
     func refreshData()  {
-        // TODO: date formatter à checker, pas min
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
             self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")

@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-class UrlProtocolMock: URLProtocol {
+final class UrlProtocolMock: URLProtocol {
     static var error: Error?
     static var data: Data?
     
