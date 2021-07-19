@@ -14,8 +14,6 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     private var isRecipeFavorite = false
     private var extraInfoView = ExtraInfoView()
     
-    
-    
     @IBOutlet weak var ingredientsTitle: UILabel!
     @IBOutlet weak var backgroundPicture: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
@@ -72,15 +70,7 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
         guard let recipe = recipe else { return }
         do {
             try StorageService.shared.saveRecipe(recipe)
-//            if recipe.totalTime == 0.0 {
-//                extraInfoView.preparationTimeIcon.isHidden = true
-//                extraInfoView.preparationTime.isHidden = true
-//            }
-            
-            
-            
             fetchFavoriteState()
-            
         } catch {
             print(error)
             showAlert("Can't save recipe to favorite", "Please try again later")
@@ -103,13 +93,10 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     private func fetchFavoriteState() {
         guard let recipe = recipe else { return }
         let recipes = try? StorageService.shared.loadRecipes()
-
-        if recipe.totalTime == 0.0 {
-            extraInfoView.preparationTimeIcon.isHidden = true
-            extraInfoView.preparationTime.isHidden = true
-        }
-        
-        
+//        if recipe.totalTime == 0.0 {
+//            extraInfoView.preparationTimeIcon.isHidden = true
+//            extraInfoView.preparationTime.isHidden = true
+//        }
         guard let _ = recipes?.first(where: { $0 == recipe }) else { isRecipeFavorite = false; return }
         isRecipeFavorite = true
     }

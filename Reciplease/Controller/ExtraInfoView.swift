@@ -23,27 +23,23 @@ class ExtraInfoView: UIView {
     var numberOfGuestsIcon = UIImageView()
     
     private func refreshExtraViewData()  {
+        
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
             self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
-        } else {
-            self.numberOfGuestsIcon.isHidden = true
-            self.numberOfGuests.isHidden = true
         }
         
-        if let preparationTime = recipe?.totalTime {
-            let formatter = DateComponentsFormatter()
-            formatter.unitsStyle = .brief
-            let dateTochange = preparationTime * 60
-            let formattedString = formatter.string(from: dateTochange)!//formatter.string(from:
-            self.preparationTime.text = " \(formattedString)"
-             print(formattedString)
+        if let preparationTime = recipe?.totalTime, recipe?.totalTime != 0.0 {
+            self.preparationTime.text = "\(preparationTime.timeFormatter())"
             self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
         } else {
-            self.preparationTime.isHidden = true
-            self.preparationTimeIcon.isHidden = true
+            self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
+            self.preparationTime.text = " - "
+
         }
     }
+    
+    
     
     func configureView() {
         numberOfGuests.adjustsFontForContentSizeCategory = true

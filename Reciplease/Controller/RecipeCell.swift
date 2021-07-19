@@ -13,7 +13,7 @@ class RecipeCell: UITableViewCell {
     var cellBackgroundImage = UIImageView()
     var timeAndYieldFrame = UIView()
     var nameAndIngredientsStackView = UIStackView()
-    var extraInfoView = ExtraInfoView()
+    private var extraInfoView = ExtraInfoView()
     var recipe: Recipe? {
         didSet {
             refreshData()
@@ -38,12 +38,12 @@ class RecipeCell: UITableViewCell {
     
     /// Setting values of the view with values of the recipe object
     private func refreshData() {
-        recipeNameLabel.text = recipe?.name
-        
-        ingredientsPreviewLabel.text = recipe?.ingredients.joined(separator: ", ")
         extraInfoView.recipe = recipe
 
-        if let image = recipe?.imageUrl { /// We first check we have an imageUrl, then we had it as background image
+        guard let recipe = recipe else { return }
+        recipeNameLabel.text = recipe.name
+        ingredientsPreviewLabel.text = recipe.ingredients.joined(separator: ", ")
+        if let image = recipe.imageUrl { /// We first check we have an imageUrl, then we had it as background image
             cellBackgroundImage.loadImage(image)
         } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic
             cellBackgroundImage.image = UIImage(named: "defaultRecipe")
