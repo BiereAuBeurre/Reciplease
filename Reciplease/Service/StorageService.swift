@@ -39,7 +39,7 @@ class StorageService {
         recipeEntity.imageUrl = recipe.imageUrl
         recipeEntity.recipeUrl = recipe.recipeUrl
         recipeEntity.ingredients = recipe.ingredients.joined(separator: ",")
-        recipeEntity.totalTime = recipe.totalTime ?? 0.0
+        recipeEntity.totalTime = recipe.totalTime
         recipeEntity.yield = recipe.yield
         if viewContext.hasChanges {
             do {

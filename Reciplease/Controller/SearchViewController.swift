@@ -27,16 +27,23 @@ final class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+    
+    private func setupView() {
         clearList()
         self.activityIndicator.isHidden = true
         searchRecipesButton.addCornerRadius()
         clearButton.addCornerRadius()
         addIngredientButton.addCornerRadius()
+        searchBar.adjustsFontForContentSizeCategory = true
+        ingredientsList.adjustsFontForContentSizeCategory = true
     }
     
     private func ingredientsListformatted() -> String {
         return ingredientsArray.joined(separator: ",")
     }
+    
     
     private func clearList() {
         ingredientsList.text = ""

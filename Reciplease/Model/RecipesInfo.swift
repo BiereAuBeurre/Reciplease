@@ -19,10 +19,10 @@ struct Recipe: Decodable {
     let name: String
     let recipeUrl: String
     let imageUrl: String?
-    let totalTime: Double? // 0.0 pour nil chez certains à remplacer
+    let totalTime: Double
     let yield: Double
     
-    let ingredients: [String] // à convertir en string unique
+    let ingredients: [String]
         
     enum CodingKeys: String, CodingKey {
         case recipe
@@ -42,9 +42,7 @@ struct Recipe: Decodable {
         imageUrl = try recipe.decode(String.self, forKey: .imageUrl)
         ingredients = try recipe.decode([String].self, forKey: .ingredients)
         recipeUrl = try recipe.decode(String.self, forKey: .recipeUrl)
-        let decodedTotalTime = try recipe.decode(Double.self, forKey: .totalTime)
-        totalTime = decodedTotalTime == 0.0 ? nil : decodedTotalTime
-//        ingredients = ingredients.joined(separator:",")
+        totalTime = try recipe.decode(Double.self, forKey: .totalTime)
         yield = try recipe.decode(Double.self, forKey: .yield)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 class ExtraInfoView: UIView {
     var recipe: Recipe? {
         didSet {
-            refreshData()
+            refreshExtraViewData()
         }
     }
     
@@ -22,7 +22,7 @@ class ExtraInfoView: UIView {
     var preparationTimeIcon = UIImageView()
     var numberOfGuestsIcon = UIImageView()
     
-    func refreshData()  {
+    private func refreshExtraViewData()  {
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
             self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
@@ -30,6 +30,7 @@ class ExtraInfoView: UIView {
             self.numberOfGuestsIcon.isHidden = true
             self.numberOfGuests.isHidden = true
         }
+        
         if let preparationTime = recipe?.totalTime {
             let formatter = DateComponentsFormatter()
             formatter.unitsStyle = .brief
@@ -45,8 +46,9 @@ class ExtraInfoView: UIView {
     }
     
     func configureView() {
+        numberOfGuests.adjustsFontForContentSizeCategory = true
         preparationTime.textAlignment = .natural
-//        preparationTime.adjustsFontSizeToFitWidth = true
+        preparationTime.adjustsFontSizeToFitWidth = true
         preparationTime.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.textAlignment = .natural

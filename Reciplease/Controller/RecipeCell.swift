@@ -10,8 +10,6 @@ class RecipeCell: UITableViewCell {
     // MARK: Properties
     var recipeNameLabel = UILabel()
     var ingredientsPreviewLabel = UILabel()
-    var yield = UILabel()
-    var totalTimeLabel = UILabel()
     var cellBackgroundImage = UIImageView()
     var timeAndYieldFrame = UIView()
     var nameAndIngredientsStackView = UIStackView()
@@ -41,9 +39,9 @@ class RecipeCell: UITableViewCell {
     /// Setting values of the view with values of the recipe object
     private func refreshData() {
         recipeNameLabel.text = recipe?.name
+        
         ingredientsPreviewLabel.text = recipe?.ingredients.joined(separator: ", ")
         extraInfoView.recipe = recipe
-//        extraInfoView.refreshData()
 
         if let image = recipe?.imageUrl { /// We first check we have an imageUrl, then we had it as background image
             cellBackgroundImage.loadImage(image)
@@ -51,12 +49,6 @@ class RecipeCell: UITableViewCell {
             cellBackgroundImage.image = UIImage(named: "defaultRecipe")
             cellBackgroundImage.alpha = 0.55
         }
-        
-        if recipe?.totalTime == 0.0 {
-            extraInfoView.preparationTimeIcon.isHidden = true
-            extraInfoView.preparationTime.isHidden = true
-        }
-        
     }
     
     // MARK: - Setting constraints and displaying rules
@@ -74,7 +66,6 @@ class RecipeCell: UITableViewCell {
         recipeNameLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         recipeNameLabel.numberOfLines = 0
         recipeNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        // recipeNameLabel.textColor = .label
         
         /// TODO :  appliquer adjustFontForContentSizeCategory pour tous les textes
         //MARK: INGREDIENTS PREVIEW LABEL

@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-enum DataMode {
+public enum DataMode {
     case api
     case coreData
     var title: String {

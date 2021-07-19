@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="3H1-Cf-ULW">
-                                <rect key="frame" x="0.0" y="541" width="414" height="355"/>
+                                <rect key="frame" x="0.0" y="545" width="414" height="351"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciplease" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hb-NF-ZcT">
-                                <rect key="frame" x="8" y="124" width="398" height="37"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RECIPLEASE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hb-NF-ZcT">
+                                <rect key="frame" x="8" y="124" width="398" height="41"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="34"/>
                                 <color key="textColor" name="myPink"/>
                                 <nil key="highlightedColor"/>
                             </label>

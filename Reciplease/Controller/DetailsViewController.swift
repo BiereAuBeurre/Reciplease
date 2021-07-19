@@ -48,10 +48,11 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
         recipeName.numberOfLines = 0
         ingredients.font = UIFont.preferredFont(forTextStyle: .body)
         ingredientsTitle.font = UIFont.preferredFont(forTextStyle: .headline)
-        ingredientsTitle.text = "What you'll need :"
+        ingredientsTitle.text = "👨‍🍳 What you'll need :"
         recipeName.text = recipe?.name
         ingredients.adjustsFontForContentSizeCategory = true
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
+        
         
         if let loadedBackgroundPicture = recipe?.imageUrl {
             backgroundPicture.loadImage(loadedBackgroundPicture)
@@ -70,11 +71,14 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     private func addToFavorite() {
         guard let recipe = recipe else { return }
         do {
-            if recipe.totalTime == 0.0 {
-                extraInfoView.preparationTimeIcon.isHidden = true
-                extraInfoView.preparationTime.isHidden = true
-            }
             try StorageService.shared.saveRecipe(recipe)
+//            if recipe.totalTime == 0.0 {
+//                extraInfoView.preparationTimeIcon.isHidden = true
+//                extraInfoView.preparationTime.isHidden = true
+//            }
+            
+            
+            
             fetchFavoriteState()
             
         } catch {
