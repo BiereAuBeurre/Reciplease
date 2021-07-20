@@ -39,26 +39,26 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     // MARK: - Methods
     
     private func setUpView() {
-        extraInfoView.configureView()
-
+//        extraInfoView.configureView()
         button.addCornerRadius()
+        
         recipeName.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         recipeName.numberOfLines = 0
-        ingredients.font = UIFont.preferredFont(forTextStyle: .body)
-        ingredientsTitle.font = UIFont.preferredFont(forTextStyle: .headline)
-        ingredientsTitle.text = "👨‍🍳 What you'll need :"
         recipeName.text = recipe?.name
+        
         ingredients.adjustsFontForContentSizeCategory = true
         ingredients.text =  "- \(recipe?.ingredients.joined(separator: "\n- ") ?? "not available")"
+        ingredients.font = UIFont.preferredFont(forTextStyle: .body)
         
-        
+        ingredientsTitle.font = UIFont.preferredFont(forTextStyle: .headline)
+        ingredientsTitle.text = "👨‍🍳 What you'll need :"
+  
         if let loadedBackgroundPicture = recipe?.imageUrl {
             backgroundPicture.loadImage(loadedBackgroundPicture)
         }
         extraInfoView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(extraInfoView)
         view.bringSubviewToFront(extraInfoView)
-        extraInfoView.preparationTimeIcon.tintColor = .systemGreen
 
         NSLayoutConstraint.activate([
             backgroundPicture.trailingAnchor.constraint(equalTo: extraInfoView.trailingAnchor, constant: 2),
@@ -111,7 +111,7 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     }
     
     @objc func toggleFavorite() {
-        // vérifie si c'est en favoris, add to favorite ou remove from favorite <- gère l'entity
+        /// Check if the recipe is already marked as favorite, then add it or remove it from our recipe entity (our favorite data base)
         if isRecipeFavorite {
             // suppression du favori
             navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")

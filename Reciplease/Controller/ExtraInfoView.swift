@@ -14,13 +14,13 @@ class ExtraInfoView: UIView {
         }
     }
     
-    var parentStackView = UIStackView()
-    var prepTimeStackView = UIStackView()
-    var numbOfGuestStackView = UIStackView()
-    var preparationTime = UILabel()
-    var numberOfGuests = UILabel()
-    var preparationTimeIcon = UIImageView()
-    var numberOfGuestsIcon = UIImageView()
+    private var parentStackView = UIStackView()
+    private var prepTimeStackView = UIStackView()
+    private var numbOfGuestStackView = UIStackView()
+    private var preparationTime = UILabel()
+    private  var numberOfGuests = UILabel()
+    private var preparationTimeIcon = UIImageView()
+    private var numberOfGuestsIcon = UIImageView()
     
     private func refreshExtraViewData()  {
         
@@ -39,31 +39,32 @@ class ExtraInfoView: UIView {
         }
     }
     
-    
-    
     func configureView() {
-        numberOfGuests.adjustsFontForContentSizeCategory = true
         preparationTime.textAlignment = .natural
         preparationTime.adjustsFontSizeToFitWidth = true
         preparationTime.font = UIFont.preferredFont(forTextStyle: .caption1)
+        preparationTime.lineBreakMode = .byWordWrapping
+        numberOfGuests.adjustsFontForContentSizeCategory = true
         numberOfGuests.font = UIFont.preferredFont(forTextStyle: .caption1)
         numberOfGuests.textAlignment = .natural
-        //        backgroundColor = .myPink
+        
         parentStackView.translatesAutoresizingMaskIntoConstraints = false
         parentStackView.layer.masksToBounds = true
-        //        parentStackView.layer.cornerRadius = 5
         parentStackView.spacing = 0
         parentStackView.distribution = .fillEqually
         parentStackView.axis = .vertical
-        preparationTime.lineBreakMode = .byWordWrapping
+        
         numbOfGuestStackView.translatesAutoresizingMaskIntoConstraints = false
-        prepTimeStackView.translatesAutoresizingMaskIntoConstraints = false
         numbOfGuestStackView.axis = .horizontal
         numbOfGuestStackView.distribution = .fillProportionally
+        
+        prepTimeStackView.translatesAutoresizingMaskIntoConstraints = false
         prepTimeStackView.distribution = .fillProportionally
+        prepTimeStackView.axis = .horizontal
+
         preparationTimeIcon.tintColor = .label
         numberOfGuestsIcon.tintColor = .label
-        prepTimeStackView.axis = .horizontal
+        
         numbOfGuestStackView.addArrangedSubview(numberOfGuestsIcon)
         numbOfGuestStackView.addArrangedSubview(numberOfGuests)
         prepTimeStackView.addArrangedSubview(preparationTimeIcon)
@@ -76,6 +77,7 @@ class ExtraInfoView: UIView {
         NSLayoutConstraint.activate([
             preparationTimeIcon.heightAnchor.constraint(equalToConstant: 20),
             preparationTimeIcon.widthAnchor.constraint(equalToConstant: 20),
+            
             numberOfGuestsIcon.heightAnchor.constraint(equalToConstant: 20),
             numberOfGuestsIcon.widthAnchor.constraint(equalToConstant: 20),
             

@@ -80,7 +80,8 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
             do {
                 recipes = try StorageService.shared.loadRecipes()
                 self.activityIndicator.stopAnimating()
-                if recipes.isEmpty { viewState = .empty
+                if recipes.isEmpty {
+                    viewState = .empty
                 }
                 else {
                     viewState = .showData(recipes)
@@ -91,7 +92,17 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         }
     }
     
+    @objc func deleteAll(_ sender: UIBarButtonItem) {
+        if dataMode == .coreData {
+            recipes.removeAll()
+            viewState = .empty
+        }
+    }
+    
     private func setupView() {
+//        if dataMode == .coreData {
+//            navigationItem.rightBarButtonItem? = UIBarButtonItem(title: "Delete all", style: .plain, target: self, action: #selector(deleteAll))
+//        }
         /// To clean extra useless separator for empty cells in fav
         self.tableView.tableFooterView = UIView()
         tableView.separatorStyle = .singleLine
@@ -181,20 +192,20 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard dataMode == .coreData else { return }
-        if editingStyle == .delete {
-            do {
-                // deleting the recipe in the core data "memory"
-                try StorageService.shared.deleteRecipe(recipes[indexPath.row])
-            } catch  {
-                print("error")
+        //        guard dataMode == .coreData else { return } {
+        if dataMode == .coreData {
+            if editingStyle == .delete {
+                do { // deleting the recipe in the core data "memory"
+                    try StorageService.shared.deleteRecipe(recipes[indexPath.row])
+                } catch  { print("error") }
+                // then delete the row from the datasource
+                recipes.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
-            // then delete the row from the datasource
-            recipes.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-        if recipes.isEmpty {
-            viewState = .empty
+            if recipes.isEmpty {
+                viewState = .empty
+            }
         }
     }
+    
 }

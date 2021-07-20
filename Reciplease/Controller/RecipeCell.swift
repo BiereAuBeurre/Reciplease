@@ -8,11 +8,11 @@ import UIKit
 
 class RecipeCell: UITableViewCell {
     // MARK: Properties
-    var recipeNameLabel = UILabel()
-    var ingredientsPreviewLabel = UILabel()
-    var cellBackgroundImage = UIImageView()
-    var timeAndYieldFrame = UIView()
-    var nameAndIngredientsStackView = UIStackView()
+    private var recipeNameLabel = UILabel()
+    private var ingredientsPreviewLabel = UILabel()
+    private var cellBackgroundImage = UIImageView()
+    private var timeAndYieldFrame = UIView()
+    private var nameAndIngredientsStackView = UIStackView()
     private var extraInfoView = ExtraInfoView()
     var recipe: Recipe? {
         didSet {
@@ -38,11 +38,11 @@ class RecipeCell: UITableViewCell {
     
     /// Setting values of the view with values of the recipe object
     private func refreshData() {
-        extraInfoView.recipe = recipe
-
         guard let recipe = recipe else { return }
+        extraInfoView.recipe = recipe
         recipeNameLabel.text = recipe.name
         ingredientsPreviewLabel.text = recipe.ingredients.joined(separator: ", ")
+        
         if let image = recipe.imageUrl { /// We first check we have an imageUrl, then we had it as background image
             cellBackgroundImage.loadImage(image)
         } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic
@@ -95,11 +95,13 @@ class RecipeCell: UITableViewCell {
             cellBackgroundImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             cellBackgroundImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             cellBackgroundImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            
             //MARK: Name & Ingredients stack view
             nameAndIngredientsStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 3.5),
             nameAndIngredientsStackView.topAnchor.constraint(equalToSystemSpacingBelow: contentView.topAnchor, multiplier: 2.5),
             contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: nameAndIngredientsStackView.trailingAnchor, multiplier: 18),
             contentView.bottomAnchor.constraint(equalToSystemSpacingBelow: nameAndIngredientsStackView.bottomAnchor, multiplier: 2),
+            
             // MARK: Extra info view
             extraInfoView.topAnchor.constraint(equalToSystemSpacingBelow: contentView.topAnchor, multiplier: 1),
             contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: extraInfoView.trailingAnchor, multiplier: 1),
@@ -109,7 +111,6 @@ class RecipeCell: UITableViewCell {
         // MARK: TESTS COULEURS :
         // recipeNameLabel.backgroundColor = .orange
         // ingredientsPreviewLabel.backgroundColor = .red
-        // nameAndIngredientsStackView.backgroundColor = .yellow
     }
     
     override func awakeFromNib() {

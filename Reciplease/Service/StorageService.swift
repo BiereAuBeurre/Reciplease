@@ -18,14 +18,11 @@ class StorageService {
     }
     
     func loadRecipes() throws -> [Recipe] {
-//     requete coreData, retourne objet recipeEntity converti en recipe dès que c'est loadé
+        // requete coreData, retourne objet recipeEntity converti en recipe dès que c'est loadé
         let fetchRequest: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         let recipeEntities: [RecipeEntity]
-        do {
-            recipeEntities = try viewContext.fetch(fetchRequest)
-        } catch {
-            throw error
-        }
+        do { recipeEntities = try viewContext.fetch(fetchRequest) }
+        catch { throw error }
         //convertir en boucle et implémenter le loadrecipes et favorites
         let recipes = recipeEntities.map { (recipeEntity) -> Recipe in
             return Recipe(from: recipeEntity)
@@ -42,33 +39,23 @@ class StorageService {
         recipeEntity.totalTime = recipe.totalTime
         recipeEntity.yield = recipe.yield
         if viewContext.hasChanges {
-            do {
-                try viewContext.save()
-            } catch {
-                // Show some error here
-                throw error
-            }
+            do { try viewContext.save() }
+            catch { throw error }
         }
     }
     
     func deleteRecipe(_ recipe: Recipe) throws {
-        
         let fetchRequest: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         let predicate = NSPredicate(format: "name == %@", recipe.name)
         fetchRequest.predicate = predicate
-        
         let recipeEntities: [RecipeEntity]
 
-        do {
-            recipeEntities = try viewContext.fetch(fetchRequest)
+        do { recipeEntities = try viewContext.fetch(fetchRequest)
             recipeEntities.forEach { (recipeEntity) in
-                viewContext.delete(recipeEntity)
-            }
+                viewContext.delete(recipeEntity) }
             // save une fois que c'est supprimé
-            try viewContext.save()
-        } catch {
-            throw error
-        }
+            try viewContext.save() }
+        catch { throw error }
         
     }
 }
