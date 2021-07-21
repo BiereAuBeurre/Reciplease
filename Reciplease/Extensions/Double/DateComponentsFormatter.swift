@@ -12,6 +12,7 @@ extension Double {
     func timeFormatter() -> String {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
+        formatter.allowedUnits = [.hour,.minute]
         let dateTochange = self * 60
         let formattedString = formatter.string(from: dateTochange)!
         return formattedString

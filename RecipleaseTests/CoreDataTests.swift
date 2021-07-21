@@ -8,7 +8,7 @@ import CoreData
 import XCTest
 @testable import Reciplease
 
-class CoreDataTests: XCTestCase {
+final class CoreDataTests: XCTestCase {
     
     var storageService: StorageService!
     let recipe = FakeResponseData.recipe.first!

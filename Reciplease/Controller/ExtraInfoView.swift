@@ -7,13 +7,18 @@
 
 import UIKit
 
-class ExtraInfoView: UIView {
+final class ExtraInfoView: UIView {
     var recipe: Recipe? {
         didSet {
             refreshExtraViewData()
         }
     }
-    
+    private var dateComponentFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .brief
+        formatter.allowedUnits = [.hour,.minute]
+        return formatter
+    }
     private var parentStackView = UIStackView()
     private var prepTimeStackView = UIStackView()
     private var numbOfGuestStackView = UIStackView()
@@ -26,16 +31,13 @@ class ExtraInfoView: UIView {
         
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
-            self.numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
         }
         
         if let preparationTime = recipe?.totalTime, recipe?.totalTime != 0.0 {
-            self.preparationTime.text = "\(preparationTime.timeFormatter())"
-            self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
+            let duration = dateComponentFormatter.string(from: Double(preparationTime * 60))
+            self.preparationTime.text = duration
         } else {
-            self.preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
             self.preparationTime.text = " - "
-
         }
     }
     
@@ -61,10 +63,12 @@ class ExtraInfoView: UIView {
         prepTimeStackView.translatesAutoresizingMaskIntoConstraints = false
         prepTimeStackView.distribution = .fillProportionally
         prepTimeStackView.axis = .horizontal
-
+        
+        preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
         preparationTimeIcon.tintColor = .label
         numberOfGuestsIcon.tintColor = .label
-        
+        numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
+
         numbOfGuestStackView.addArrangedSubview(numberOfGuestsIcon)
         numbOfGuestStackView.addArrangedSubview(numberOfGuests)
         prepTimeStackView.addArrangedSubview(preparationTimeIcon)

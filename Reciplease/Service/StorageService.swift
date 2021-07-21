@@ -23,7 +23,6 @@ class StorageService {
         let recipeEntities: [RecipeEntity]
         do { recipeEntities = try viewContext.fetch(fetchRequest) }
         catch { throw error }
-        //convertir en boucle et implémenter le loadrecipes et favorites
         let recipes = recipeEntities.map { (recipeEntity) -> Recipe in
             return Recipe(from: recipeEntity)
         }
@@ -35,7 +34,7 @@ class StorageService {
         recipeEntity.name = recipe.name
         recipeEntity.imageUrl = recipe.imageUrl
         recipeEntity.recipeUrl = recipe.recipeUrl
-        recipeEntity.ingredients = recipe.ingredients.joined(separator: ",")
+        recipeEntity.ingredients = try? JSONEncoder().encode(recipe.ingredients) 
         recipeEntity.totalTime = recipe.totalTime
         recipeEntity.yield = recipe.yield
         if viewContext.hasChanges {

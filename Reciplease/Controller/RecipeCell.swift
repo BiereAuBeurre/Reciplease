@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class RecipeCell: UITableViewCell {
+final class RecipeCell: UITableViewCell {
     // MARK: Properties
     private var recipeNameLabel = UILabel()
     private var ingredientsPreviewLabel = UILabel()

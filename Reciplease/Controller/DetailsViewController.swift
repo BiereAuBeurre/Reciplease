@@ -55,6 +55,8 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
   
         if let loadedBackgroundPicture = recipe?.imageUrl {
             backgroundPicture.loadImage(loadedBackgroundPicture)
+        } else {
+            backgroundPicture.image = UIImage(named: "defaultRecipe")
         }
         extraInfoView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(extraInfoView)

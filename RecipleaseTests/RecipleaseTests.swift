@@ -9,7 +9,7 @@ import XCTest
 @testable import Alamofire
 @testable import Reciplease
 
-class RecipleaseTests: XCTestCase {
+final class RecipleaseTests: XCTestCase {
     var session: Session!
     var networkService: RecipeService!
     
