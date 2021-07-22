@@ -20,7 +20,6 @@
 		EF13F2D6265BEAC40063AF7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF13F2D4265BEAC40063AF7E /* LaunchScreen.storyboard */; };
 		EF13F2E1265BEAC40063AF7E /* RecipleaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13F2E0265BEAC40063AF7E /* RecipleaseTests.swift */; };
 		EF13F2EC265BEAC50063AF7E /* RecipleaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF13F2EB265BEAC50063AF7E /* RecipleaseUITests.swift */; };
-		EF45617D26A5C7050034FE4D /* DateComponentsFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF45617C26A5C7050034FE4D /* DateComponentsFormatter.swift */; };
 		EF49CDDE265F90E50034A1A8 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF49CDDD265F90E50034A1A8 /* ListViewController.swift */; };
 		EF64DF0A265D3C3C007D0E2D /* RecipeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64DF09265D3C3C007D0E2D /* RecipeService.swift */; };
 		EF65F7C6268B1D3100F50D9B /* ExtraInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF65F7C5268B1D3100F50D9B /* ExtraInfoView.swift */; };
@@ -82,7 +81,6 @@
 		EF13F2E7265BEAC50063AF7E /* RecipleaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipleaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF13F2EB265BEAC50063AF7E /* RecipleaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseUITests.swift; sourceTree = "<group>"; };
 		EF13F2ED265BEAC50063AF7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF45617C26A5C7050034FE4D /* DateComponentsFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponentsFormatter.swift; sourceTree = "<group>"; };
 		EF49CDDD265F90E50034A1A8 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		EF64DF09265D3C3C007D0E2D /* RecipeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeService.swift; sourceTree = "<group>"; };
 		EF65F7C5268B1D3100F50D9B /* ExtraInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraInfoView.swift; sourceTree = "<group>"; };
@@ -214,14 +212,6 @@
 			path = RecipleaseUITests;
 			sourceTree = "<group>";
 		};
-		EF45617B26A5C6DD0034FE4D /* Double */ = {
-			isa = PBXGroup;
-			children = (
-				EF45617C26A5C7050034FE4D /* DateComponentsFormatter.swift */,
-			);
-			path = Double;
-			sourceTree = "<group>";
-		};
 		EF64DF04265D3B99007D0E2D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +254,6 @@
 		EF64DF08265D3C1C007D0E2D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				EF45617B26A5C6DD0034FE4D /* Double */,
 				EF6E09A3266A8414003F725F /* UIButton */,
 				EF6E098D266A4021003F725F /* UIImageView */,
 				EF6AB85D265EAD0F0027EB96 /* String */,
@@ -569,7 +558,6 @@
 				EF6AB85F265EAD250027EB96 /* CapitalizingFirstLetter.swift in Sources */,
 				EF1133ED265E63F800050DE7 /* RecipesInfo.swift in Sources */,
 				EFF8CAAA2686122000B46165 /* StorageService.swift in Sources */,
-				EF45617D26A5C7050034FE4D /* DateComponentsFormatter.swift in Sources */,
 				EFF8CAAC2686178C00B46165 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

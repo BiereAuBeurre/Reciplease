@@ -51,19 +51,23 @@ final class SearchViewController: UIViewController {
     }
     
     private func pushRecipeList() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let listViewController = storyboard.instantiateViewController(identifier: "ListViewController") as? ListViewController else { return }
-        listViewController.ingredients = ingredientsListformatted()
-        listViewController.recipes = recipes
-        listViewController.dataMode = .api
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.pushViewController(listViewController, animated: true)
+        if ingredientsArray.isEmpty {
+            showAlert("You forgot something", "Please add at least one ingredient to search recipes.")
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let listViewController = storyboard.instantiateViewController(identifier: "ListViewController") as? ListViewController else { return }
+            listViewController.ingredients = ingredientsListformatted()
+            listViewController.recipes = recipes
+            listViewController.dataMode = .api
+            navigationController?.isNavigationBarHidden = false
+            navigationController?.pushViewController(listViewController, animated: true)
+        }
     }
     
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
         // First we're checking an ingredient is type to don't add an empty field to our URLRequest
-        guard searchBar.text != "" else { return showAlert("Please add an ingredient", "It seems you forgot to add one 😉") }
+        guard searchBar.text != "" else { return showAlert("Please type an ingredient", "It seems you forgot to write an ingredient to look for.") }
         // Unwrapping searchBar.text
         guard let ingredient = searchBar.text else { return }
         ingredientsArray.append(ingredient)
@@ -75,7 +79,6 @@ final class SearchViewController: UIViewController {
     }
     
     @IBAction func searchRecipesButton(_ sender: Any) {
-        print("JE FAIS L'APPEL RESEAU")
         pushRecipeList()
     }
 }

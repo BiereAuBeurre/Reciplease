@@ -48,7 +48,6 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
                 print("empty")
             case .error :
                 showAlert("Error", "Something went wrong, try again please")
-                print("error")
             case .showData (let recipes):
                 print("datas are shown")
                 self.recipes = recipes
@@ -59,8 +58,8 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
     }
     
     private func resetState() {
-        tableView.isHidden = true
         activityIndicator.stopAnimating()
+        tableView.isHidden = true
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -80,7 +79,7 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         if dataMode == .coreData {
             do {
                 recipes = try StorageService.shared.loadRecipes()
-                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.stopAnimating()
                 if recipes.isEmpty {
                     viewState = .empty
                 }
@@ -88,7 +87,8 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
                     viewState = .showData(recipes)
                 }
             } catch { print(error) }
-        } else {
+        }
+        else {
             fetchRecipes()
         }
     }
@@ -105,7 +105,6 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
     }
         
     private func displayEmptyView() {

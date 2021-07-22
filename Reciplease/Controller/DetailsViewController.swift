@@ -95,10 +95,6 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     private func fetchFavoriteState() {
         guard let recipe = recipe else { return }
         let recipes = try? StorageService.shared.loadRecipes()
-//        if recipe.totalTime == 0.0 {
-//            extraInfoView.preparationTimeIcon.isHidden = true
-//            extraInfoView.preparationTime.isHidden = true
-//        }
         guard let _ = recipes?.first(where: { $0 == recipe }) else { isRecipeFavorite = false; return }
         isRecipeFavorite = true
     }

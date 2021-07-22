@@ -37,7 +37,7 @@ final class ExtraInfoView: UIView {
             let duration = dateComponentFormatter.string(from: Double(preparationTime * 60))
             self.preparationTime.text = duration
         } else {
-            self.preparationTime.text = " - "
+            self.preparationTime.text = "  - "
         }
     }
     
@@ -65,9 +65,9 @@ final class ExtraInfoView: UIView {
         prepTimeStackView.axis = .horizontal
         
         preparationTimeIcon.image = UIImage(systemName: "alarm.fill")
+        numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
         preparationTimeIcon.tintColor = .label
         numberOfGuestsIcon.tintColor = .label
-        numberOfGuestsIcon.image = UIImage(systemName: "person.2.fill")
 
         numbOfGuestStackView.addArrangedSubview(numberOfGuestsIcon)
         numbOfGuestStackView.addArrangedSubview(numberOfGuests)
