@@ -9,7 +9,7 @@ import UIKit
 import SafariServices
 
 final class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
-    private var recipes: [Recipe] = []
+//    private var recipes: [Recipe] = []
     var recipe: Recipe?
     private var isRecipeFavorite = false
     private var extraInfoView = ExtraInfoView()

@@ -36,13 +36,22 @@ final class RecipeCell: UITableViewCell {
     
     // MARK: Methods
     
+    /// Adding space between cells
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //set the values for top,left,bottom,right margins
+        let margins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        contentView.frame = contentView.frame.inset(by: margins)
+    }
     /// Setting values of the view with values of the recipe object
     private func refreshData() {
         guard let recipe = recipe else { return }
         extraInfoView.recipe = recipe
         recipeNameLabel.text = recipe.name
         ingredientsPreviewLabel.text = recipe.ingredients.joined(separator: ", ")
-        
+        /// Adding a default image while "real" one are loading
+        cellBackgroundImage.image = UIImage(named: "neutral_bg")
+
         if let image = recipe.imageUrl { /// We first check we have an imageUrl, then we had it as background image
             cellBackgroundImage.loadImage(image)
         } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic

@@ -77,30 +77,26 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
     // MARK: - Methods
     private func setUpDataToLoad() {
         if dataMode == .coreData {
-            do {
-                recipes = try StorageService.shared.loadRecipes()
-//                self.activityIndicator.stopAnimating()
+            do { recipes = try StorageService.shared.loadRecipes()
                 if recipes.isEmpty {
                     viewState = .empty
-                }
-                else {
+                } else {
                     viewState = .showData(recipes)
                 }
             } catch { print(error) }
-        }
-        else {
+        } else {
             fetchRecipes()
         }
     }
     
     private func setupView() {
-        /// To clean extra useless separator for empty cells in fav
+        /// Clean extra useless separator for empty cells in fav
         self.tableView.tableFooterView = UIView()
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .systemGray
-        title = dataMode.title
+        tableView.separatorStyle = .none
+//        tableView.separatorColor = .systemGray
         tableView.dataSource = self
         tableView.delegate = self
+        title = dataMode.title
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -108,17 +104,16 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
     }
         
     private func displayEmptyView() {
-        let backgroundImage = UITextView.init(frame: self.view.frame)
-        backgroundImage.text = ""
-        backgroundImage.font = UIFont.preferredFont(forTextStyle: .headline)
-        backgroundImage.textAlignment = .center
-        backgroundImage.isEditable = false
+        let emptyCaseTextView = UITextView.init(frame: self.view.frame)
+        emptyCaseTextView.font = UIFont.preferredFont(forTextStyle: .headline)
+        emptyCaseTextView.textAlignment = .center
+        emptyCaseTextView.isEditable = false
         if dataMode == .coreData {
-            backgroundImage.text = "\n\n\n\n\nYou do not have favorites recipes yet !"
-        } else if dataMode == .api {
-            backgroundImage.text = "\n\n\n\n\nNo recipe found with those ingredients.\nTry something else please"
+            emptyCaseTextView.text = "\n\n\n\n\nYou do not have favorites recipes yet !"
+        } else {
+            emptyCaseTextView.text = "\n\n\n\n\nNo recipe matching your search.\nTry something else please"
         }
-        view.insertSubview(backgroundImage, at: 0)
+        view.insertSubview(emptyCaseTextView, at: 0)
     }
     
     private func fetchRecipes() {
@@ -136,7 +131,6 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
                     self.showAlert("Error", "Can't load recipes. Please check your connection to internet and try again")
                 }
             }
-            
         }
     }
     
@@ -146,10 +140,6 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         detailsViewController.recipe = recipe
         navigationController?.isNavigationBarHidden = false
         navigationController?.pushViewController(detailsViewController, animated: true)
-    }
-    
-    @objc func dismissListController() {
-        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -199,3 +189,4 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+

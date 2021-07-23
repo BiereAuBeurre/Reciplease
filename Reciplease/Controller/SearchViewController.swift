@@ -51,6 +51,7 @@ final class SearchViewController: UIViewController {
     }
     
     private func pushRecipeList() {
+        // Checking ingredients as been added before looking for recipes
         if ingredientsArray.isEmpty {
             showAlert("You forgot something", "Please add at least one ingredient to search recipes.")
         } else {
