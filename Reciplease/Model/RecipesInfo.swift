@@ -65,9 +65,6 @@ extension Recipe {
 extension Recipe: Equatable {
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
         return lhs.recipeUrl == rhs.recipeUrl
-        // modif réalisée : Ajouter comparaison de l'URL également, plus safe que le nom seul
-        //anciennement
-//            return lhs.name == rhs.name
     }
 }
 

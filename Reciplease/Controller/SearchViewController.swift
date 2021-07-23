@@ -51,7 +51,7 @@ final class SearchViewController: UIViewController {
     }
     
     private func pushRecipeList() {
-        // Checking ingredients as been added before looking for recipes
+        /// Checking ingredients as been added before looking for recipes.
         if ingredientsArray.isEmpty {
             showAlert("You forgot something", "Please add at least one ingredient to search recipes.")
         } else {
@@ -67,9 +67,9 @@ final class SearchViewController: UIViewController {
     
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
-        // First we're checking an ingredient is type to don't add an empty field to our URLRequest
+        /// First we're checking an ingredient is type to don't add an empty field to our URLRequest.
         guard searchBar.text != "" else { return showAlert("Please type an ingredient", "It seems you forgot to write an ingredient to look for.") }
-        // Unwrapping searchBar.text
+        /// Unwrapping searchBar.text.
         guard let ingredient = searchBar.text else { return }
         ingredientsArray.append(ingredient)
         ingredientsList.text += "\n" + ingredient.capitalizingFirstLetter()

@@ -72,6 +72,30 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setUpDataToLoad()
+        if dataMode == .coreData && recipes.count != 0  {
+        self.setUpDeleteButton()
+        }
+    }
+    
+    @objc func deleteAllFav() {
+        for recipe in recipes {
+            do { /// Deleting all recipes in the core data "memory".
+                try StorageService.shared.deleteRecipe(recipe)
+            } catch  { print("error") }
+            /// Then delete from the datasource.
+            recipes.removeAll()
+            tableView.reloadData()
+            viewState = .empty
+        }
+    }
+    
+    func setUpDeleteButton() {
+        let navBarRightItem = UIBarButtonItem(
+            title: "Delete all",
+            style: .plain,
+            target: self,
+            action: #selector(deleteAllFav))
+        navigationItem.rightBarButtonItem = navBarRightItem
     }
     
     // MARK: - Methods
@@ -90,7 +114,7 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
     }
     
     private func setupView() {
-        /// Clean extra useless separator for empty cells in fav
+        /// Clean extra useless separator for empty cells in fav.
         self.tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
 //        tableView.separatorColor = .systemGray
@@ -123,6 +147,7 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let recipesInfo) where recipesInfo.recipes.isEmpty :
+                    /// If the request works but does not find any recipes.
                     self.viewState = .empty
                 case .success(let recipesInfo):
                     self.viewState = .showData(recipesInfo.recipes)
@@ -172,13 +197,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        //        guard dataMode == .coreData else { return } {
         if dataMode == .coreData {
             if editingStyle == .delete {
-                do { // deleting the recipe in the core data "memory"
+                do { /// Deleting the recipe in the core data "memory".
                     try StorageService.shared.deleteRecipe(recipes[indexPath.row])
                 } catch  { print("error") }
-                // then delete the row from the datasource
+                /// Then delete the row from the datasource.
                 recipes.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }

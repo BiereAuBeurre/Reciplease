@@ -80,7 +80,6 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
         
     }
     
-    //    private
     private func removeFromFavorite() {
         guard let recipe = recipe else { return }
         do {

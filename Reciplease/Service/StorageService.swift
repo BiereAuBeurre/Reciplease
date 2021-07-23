@@ -13,12 +13,11 @@ class StorageService {
     let viewContext: NSManagedObjectContext
 
     init(persistentContainer: NSPersistentContainer = AppDelegate.persistentContainer) {
-        // passer un persistentContainer par défaut
         self.viewContext = persistentContainer.viewContext
     }
     
     func loadRecipes() throws -> [Recipe] {
-        // requete coreData, retourne objet recipeEntity converti en recipe dès que c'est loadé
+        /// CoreData request, return a recipeEntiy object that is convert into recipe as soon as it's loaded.
         let fetchRequest: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         let recipeEntities: [RecipeEntity]
         do { recipeEntities = try viewContext.fetch(fetchRequest) }
@@ -52,7 +51,7 @@ class StorageService {
         do { recipeEntities = try viewContext.fetch(fetchRequest)
             recipeEntities.forEach { (recipeEntity) in
                 viewContext.delete(recipeEntity) }
-            // save une fois que c'est supprimé
+            /// Save once recipe is deleted.
             try viewContext.save() }
         catch { throw error }
         

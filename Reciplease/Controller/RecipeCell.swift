@@ -49,12 +49,12 @@ final class RecipeCell: UITableViewCell {
         extraInfoView.recipe = recipe
         recipeNameLabel.text = recipe.name
         ingredientsPreviewLabel.text = recipe.ingredients.joined(separator: ", ")
-        /// Adding a default image while "real" one are loading
+        /// Adding a default image while "real" one are loading.
         cellBackgroundImage.image = UIImage(named: "neutral_bg")
 
-        if let image = recipe.imageUrl { /// We first check we have an imageUrl, then we had it as background image
+        if let image = recipe.imageUrl { /// We first check we have an imageUrl, then we had it as background image.
             cellBackgroundImage.loadImage(image)
-        } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic
+        } else { /// if we havn't' imageUrl, then we set a default image from asset as background pic.
             cellBackgroundImage.image = UIImage(named: "defaultRecipe")
             cellBackgroundImage.alpha = 0.55
         }
@@ -80,7 +80,7 @@ final class RecipeCell: UITableViewCell {
         //MARK: INGREDIENTS PREVIEW LABEL
         ingredientsPreviewLabel.adjustsFontForContentSizeCategory = true
         ingredientsPreviewLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        ingredientsPreviewLabel.numberOfLines = 1
+        ingredientsPreviewLabel.numberOfLines = 2
         ingredientsPreviewLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //MARK: NAME AND INGREDIENTS STACKVIEW

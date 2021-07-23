@@ -15,7 +15,7 @@ class RecipeService {
     
     func fetchRecipes(for searchTerms: String, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
         let url = "https://api.edamam.com/search?q=\(searchTerms)&app_key=b5144453065bd0a94728a7da37aa3548&app_id=d698f1a4&to=100"
-        /// Handle food terms of two words ("blue cheese" for example)
+        /// Handle food terms of two words ("blue cheese" for example).
         let encodedUrl = url.replacingOccurrences(of: " ", with: "+")
         print(encodedUrl)
         session.request(encodedUrl).validate().responseDecodable(of: RecipesInfo.self) { (response) in
