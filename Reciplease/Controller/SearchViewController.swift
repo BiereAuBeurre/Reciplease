@@ -10,6 +10,7 @@ import Alamofire
 
 final class SearchViewController: UIViewController {
     
+    // MARK: IB Outlets
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var addIngredientButton: UIButton!
     @IBOutlet weak var searchRecipesButton: UIButton!
@@ -18,9 +19,10 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UITextField! {
         didSet { searchBar?.addDoneToolBar() }
     }
+    
+    // MARK: Private methods
     private var ingredientsArray = [String]()
-    private var recipes: [Recipe] = []
-
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -41,9 +43,9 @@ final class SearchViewController: UIViewController {
     }
     
     private func ingredientsListformatted() -> String {
+        /// Formatting all ingredients added to fit the url request.
         return ingredientsArray.joined(separator: ",")
     }
-    
     
     private func clearList() {
         ingredientsList.text = ""
@@ -53,18 +55,18 @@ final class SearchViewController: UIViewController {
     private func pushRecipeList() {
         /// Checking ingredients as been added before looking for recipes.
         if ingredientsArray.isEmpty {
-            showAlert("You forgot something", "Please add at least one ingredient to search recipes.")
+            showAlert("You forgot something", "Please add at least one ingredient to look for matching recipes.")
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             guard let listViewController = storyboard.instantiateViewController(identifier: "ListViewController") as? ListViewController else { return }
             listViewController.ingredients = ingredientsListformatted()
-            listViewController.recipes = recipes
             listViewController.dataMode = .api
             navigationController?.isNavigationBarHidden = false
             navigationController?.pushViewController(listViewController, animated: true)
         }
     }
     
+    // MARK: IB Actions
     @IBAction func addIngredientsButton(_ sender: Any) {
         searchBar.closeKeyboard()
         /// First we're checking an ingredient is type to don't add an empty field to our URLRequest.
@@ -73,6 +75,7 @@ final class SearchViewController: UIViewController {
         guard let ingredient = searchBar.text else { return }
         ingredientsArray.append(ingredient)
         ingredientsList.text += "\n" + ingredient.capitalizingFirstLetter()
+        searchBar.text = ""
     }
     
     @IBAction func clearListButton(_ sender: Any) {

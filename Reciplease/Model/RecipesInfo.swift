@@ -21,9 +21,8 @@ struct Recipe: Decodable {
     let imageUrl: String?
     let totalTime: Double
     let yield: Double
-    
     let ingredients: [String]
-        
+            
     enum CodingKeys: String, CodingKey {
         case recipe
         case name = "label"
@@ -32,7 +31,6 @@ struct Recipe: Decodable {
         case totalTime
         case yield
         case ingredients = "ingredientLines"
-
     }
     
     init(from decoder: Decoder) throws {
@@ -58,7 +56,7 @@ extension Recipe {
             self.ingredients = []
         }
         self.yield = recipeEntity.yield
-        self.totalTime = recipeEntity.totalTime
+        self.totalTime = recipeEntity.totalTime        
     }
 }
 
@@ -66,10 +64,4 @@ extension Recipe: Equatable {
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
         return lhs.recipeUrl == rhs.recipeUrl
     }
-}
-
-struct Ingredients: Decodable {
-    let text: String
-    let weight: Double
-    let image: String?
 }

@@ -9,7 +9,6 @@ import UIKit
 import SafariServices
 
 final class DetailsViewController: UIViewController, SFSafariViewControllerDelegate {
-//    private var recipes: [Recipe] = []
     var recipe: Recipe?
     private var isRecipeFavorite = false
     private var extraInfoView = ExtraInfoView()
@@ -26,7 +25,7 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
         super.viewDidLoad()
         setUpView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchFavoriteState()
@@ -39,7 +38,6 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
     // MARK: - Methods
     
     private func setUpView() {
-//        extraInfoView.configureView()
         button.addCornerRadius()
         
         recipeName.font = UIFont.preferredFont(forTextStyle: .largeTitle)
@@ -74,10 +72,8 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
             try StorageService.shared.saveRecipe(recipe)
             fetchFavoriteState()
         } catch {
-            print(error)
-            showAlert("Can't save recipe to favorite", "Please try again later")
+            print("erreur : \(error)"); showAlert("Can't save recipe to favorite", "Please try again later")
         }
-        
     }
     
     private func removeFromFavorite() {
@@ -87,7 +83,7 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
             isRecipeFavorite = false
             
         } catch {
-            print(error)
+            print("erreur: \(error)"); showAlert("Something went wrong", "Can't remove recipe from favorites right now. Please ty again later.")
         }
     }
     
@@ -122,7 +118,7 @@ final class DetailsViewController: UIViewController, SFSafariViewControllerDeleg
         }
     }
     
-    // Display safari to show entire recipes on its website
+    /// Display full recipes on its website in safari.
     @objc func openRecipeWebsite() {
         guard let urlString = recipe?.recipeUrl else { return }
         if let url = URL(string: urlString) {

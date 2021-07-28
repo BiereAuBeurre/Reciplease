@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 
+// MARK: Enums
 public enum DataMode {
     case api
     case coreData
@@ -28,9 +29,10 @@ enum State<Data> {
     case showData(Data)
 }
 
-final class ListViewController: UIViewController, UINavigationBarDelegate {
-    let activityIndicator = UIActivityIndicatorView(style: .large)
+final class ListViewController: UIViewController, UINavigationBarDelegate, UIScrollViewDelegate {
     
+    // MARK: Properties
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let recipeService = RecipeService()
     var ingredients: String = ""
     var recipes: [Recipe] = []
@@ -56,17 +58,12 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
             }
         }
     }
-    
-    private func resetState() {
-        activityIndicator.stopAnimating()
-        tableView.isHidden = true
-    }
-
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,24 +78,19 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         for recipe in recipes {
             do { /// Deleting all recipes in the core data "memory".
                 try StorageService.shared.deleteRecipe(recipe)
-            } catch  { print("error") }
+            } catch { print("Erreur: \(error)"); showAlert("Can't delete recipe", "Something went wrong, please try again later.") }
             /// Then delete from the datasource.
             recipes.removeAll()
             tableView.reloadData()
-            viewState = .empty
         }
+        viewState = .empty
     }
     
-    func setUpDeleteButton() {
-        let navBarRightItem = UIBarButtonItem(
-            title: "Delete all",
-            style: .plain,
-            target: self,
-            action: #selector(deleteAllFav))
-        navigationItem.rightBarButtonItem = navBarRightItem
+    //MARK: Private methods
+    private func resetState() {
+        activityIndicator.stopAnimating()
+        tableView.isHidden = true
     }
-    
-    // MARK: - Methods
     private func setUpDataToLoad() {
         if dataMode == .coreData {
             do { recipes = try StorageService.shared.loadRecipes()
@@ -107,17 +99,25 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
                 } else {
                     viewState = .showData(recipes)
                 }
-            } catch { print(error) }
+            } catch { print("erreur : \(error)"); showAlert("Can't load data", "Something wen wrong, please try again later.") }
         } else {
             fetchRecipes()
         }
+    }
+    
+    private func setUpDeleteButton() {
+        let navBarRightItem = UIBarButtonItem(
+            title: "Remove all",
+            style: .plain,
+            target: self,
+            action: #selector(deleteAllFav))
+        navigationItem.rightBarButtonItem = navBarRightItem
     }
     
     private func setupView() {
         /// Clean extra useless separator for empty cells in fav.
         self.tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
-//        tableView.separatorColor = .systemGray
         tableView.dataSource = self
         tableView.delegate = self
         title = dataMode.title
@@ -167,13 +167,15 @@ final class ListViewController: UIViewController, UINavigationBarDelegate {
         navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }
-
+    
 // MARK: - TableView config
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedRecipe = recipes[indexPath.row]
         displayRecipeDetailFor(selectedRecipe)
@@ -182,7 +184,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipes.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
     }
@@ -196,20 +198,20 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if dataMode == .coreData {
-            if editingStyle == .delete {
-                do { /// Deleting the recipe in the core data "memory".
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard dataMode == .coreData else { return nil }
+        let action = UIContextualAction(style: .destructive, title: "Remove") { [weak self] (action, view, completionHandler) in
+                do {
+                    guard let recipes = self?.recipes else { return }
                     try StorageService.shared.deleteRecipe(recipes[indexPath.row])
-                } catch  { print("error") }
-                /// Then delete the row from the datasource.
-                recipes.remove(at: indexPath.row)
+                }
+                catch {}
+                self?.recipes.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-            if recipes.isEmpty {
-                viewState = .empty
-            }
+                if self?.recipes.isEmpty == true { self?.viewState = .empty }
+                completionHandler(true)
         }
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
 }

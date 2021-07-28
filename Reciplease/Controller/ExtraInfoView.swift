@@ -13,6 +13,8 @@ final class ExtraInfoView: UIView {
             refreshExtraViewData()
         }
     }
+    
+    /// Formatting prep time into min, hour
     private var dateComponentFormatter: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
@@ -28,12 +30,11 @@ final class ExtraInfoView: UIView {
     private var numberOfGuestsIcon = UIImageView()
     
     private func refreshExtraViewData()  {
-        
         if let numberOfGuests = recipe?.yield {
             self.numberOfGuests.text = " \(Int(numberOfGuests))"
         }
-        
         if let preparationTime = recipe?.totalTime, recipe?.totalTime != 0.0 {
+            /// Formatting duration to dateComponentFormatter (and by the same time converting min into sec).
             let duration = dateComponentFormatter.string(from: Double(preparationTime * 60))
             self.preparationTime.text = duration
         } else {
