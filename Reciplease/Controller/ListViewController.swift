@@ -58,18 +58,22 @@ final class ListViewController: UIViewController, UINavigationBarDelegate, UIScr
             }
         }
     }
+    
+    var isAllLoaded = false
+
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
-        
+        self.fetchRecipesFromApi()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setUpDataToLoad()
-        if dataMode == .coreData && recipes.count != 0  {
+        self.fetchRecipesFromDataBase()
+        if dataMode == .coreData && recipes.count != 0 {
         self.setUpDeleteButton()
         }
     }
@@ -91,7 +95,22 @@ final class ListViewController: UIViewController, UINavigationBarDelegate, UIScr
         activityIndicator.stopAnimating()
         tableView.isHidden = true
     }
-    private func setUpDataToLoad() {
+    
+    private func deleteRecipe(recipe: Recipe) {
+        do {
+            try StorageService.shared.deleteRecipe(recipe)
+            fetchRecipesFromDataBase()
+        }
+        catch { print(error); self.showAlert("Can't delete recipe", "Something went wrong. Try gain later.") }
+    }
+    
+    private func fetchRecipesFromApi() {
+        if dataMode == .api {
+            fetchRecipes()
+        }
+    }
+    
+     private func fetchRecipesFromDataBase() {
         if dataMode == .coreData {
             do { recipes = try StorageService.shared.loadRecipes()
                 if recipes.isEmpty {
@@ -100,8 +119,6 @@ final class ListViewController: UIViewController, UINavigationBarDelegate, UIScr
                     viewState = .showData(recipes)
                 }
             } catch { print("erreur : \(error)"); showAlert("Can't load data", "Something wen wrong, please try again later.") }
-        } else {
-            fetchRecipes()
         }
     }
     
@@ -141,8 +158,9 @@ final class ListViewController: UIViewController, UINavigationBarDelegate, UIScr
     }
     
     private func fetchRecipes() {
+        guard isAllLoaded == false else { return }
         viewState = .loading
-        recipeService.fetchRecipes(for: ingredients) { [weak self] result in
+        recipeService.fetchRecipes(for: ingredients, from: 1) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {
@@ -152,8 +170,8 @@ final class ListViewController: UIViewController, UINavigationBarDelegate, UIScr
                 case .success(let recipesInfo):
                     self.viewState = .showData(recipesInfo.recipes)
                 case .failure(let error):
-                    print("Erreur :\(error)")
-                    self.showAlert("Error", "Can't load recipes. Please check your connection to internet and try again")
+                    print("Erreur : \(error.localizedDescription)")
+                    self.showAlert("Error", "Can't load recipes. Please try again.")
                 }
             }
         }
@@ -175,7 +193,15 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         return 1
     }
     
-
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell") as? RecipeCell else {
+            assertionFailure("Dequeue TableView is of wrong type")
+            return UITableViewCell()
+        }
+        cell.recipe = recipes[indexPath.row]
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedRecipe = recipes[indexPath.row]
         displayRecipeDetailFor(selectedRecipe)
@@ -189,27 +215,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
         return 160
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell") as? RecipeCell else {
-            assertionFailure("Dequeue TableView is of wrong type")
-            return UITableViewCell()
-        }
-        cell.recipe = recipes[indexPath.row]
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard dataMode == .coreData else { return nil }
-        let action = UIContextualAction(style: .destructive, title: "Remove") { [weak self] (action, view, completionHandler) in
-                do {
-                    guard let recipes = self?.recipes else { return }
-                    try StorageService.shared.deleteRecipe(recipes[indexPath.row])
-                }
-                catch {}
-                self?.recipes.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                if self?.recipes.isEmpty == true { self?.viewState = .empty }
-                completionHandler(true)
+        let action = UIContextualAction(style: .destructive, title: "Remove") { [weak self] (_, _, completionHandler) in
+            guard let recipes = self?.recipes else { return }
+            self?.deleteRecipe(recipe: recipes[indexPath.row])
+            completionHandler(true)
         }
         return UISwipeActionsConfiguration(actions: [action])
     }

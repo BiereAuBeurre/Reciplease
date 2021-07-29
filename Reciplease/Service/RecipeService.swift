@@ -13,12 +13,8 @@ class RecipeService {
         self.session = session
     }
     
-    let key = "b5144453065bd0a94728a7da37aa3548"
-    let id = "d698f1a4"
-    
-    func fetchRecipes(for searchTerms: String, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
-        let url = "https://api.edamam.com/search?q=\(searchTerms)&app_key=\(key)&app_id=\(id)&to=100"
-//
+    func fetchRecipes(for searchTerms: String, from: Int, completion: @escaping (Result<RecipesInfo, AFError>) -> Void) {
+        let url = "https://api.edamam.com/search?q=\(searchTerms)&app_key=\(ApiConfiguration.key)&app_id=\(ApiConfiguration.id)&from=\(from)&to=100"
         /// Handle food terms of two words ("cherry tomato" for example).
         let encodedUrl = url.replacingOccurrences(of: " ", with: "+")
         print("requesting recipes for : \(searchTerms). With url : \(encodedUrl)")

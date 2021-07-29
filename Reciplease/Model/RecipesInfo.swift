@@ -9,9 +9,11 @@ import Foundation
 
 struct RecipesInfo: Decodable {
      let recipes: [Recipe]
+     let count: Int
     
     enum CodingKeys: String, CodingKey {
         case recipes = "hits"
+        case count
     }
 }
 
